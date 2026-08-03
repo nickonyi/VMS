@@ -7,7 +7,7 @@ import {
   X,
   Icon,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "../../lib/utils";
 
 const ToastContext = createContext(null);
 
@@ -32,17 +32,17 @@ const iconColors = {
   info: "text-blue-600",
 };
 
-export function ToastProvider() {
-  const [toast, setToast] = useState([]);
+export function ToastProvider({ children }) {
+  const [toasts, setToasts] = useState([]);
 
   const remove = useCallback((id) => {
-    setToast((t) => t.filter((x) => x.id !== id));
+    setToasts((t) => t.filter((x) => x.id !== id));
   }, []);
 
   const toast = useCallback(
     (message, type = "info") => {
       const id = Math.random().toString(36).slice(2);
-      setToast((t) => [...t, { id, type, message }]);
+      setToasts((t) => [...t, { id, type, message }]);
       setTimeout(() => remove(id), 4000);
     },
     [remove],
