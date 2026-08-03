@@ -22,6 +22,7 @@ function AuthScreen() {
             </span>
           </div>
         </div>
+        <div className="relative max-w-md"></div>
       </div>
     </div>
   );
