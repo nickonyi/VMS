@@ -1,12 +1,5 @@
 import { createContext, useCallback, useContext, useState } from "react";
-import {
-  CheckCircle2,
-  AlertCircle,
-  Info,
-  XCircle,
-  X,
-  Icon,
-} from "lucide-react";
+import { CheckCircle2, AlertCircle, Info, XCircle, X } from "lucide-react";
 import { cn } from "../../lib/utils";
 
 const ToastContext = createContext(null);
@@ -48,11 +41,11 @@ export function ToastProvider({ children }) {
     [remove],
   );
   return (
-    <ToastContext.Provider value={toast}>
+    <ToastContext.Provider value={{ toast }}>
       {children}
       <div className="fixed top-4 right-4 z-[100] flex flex-col gap-2 w-[calc(100%-2rem)] max-w-sm pointer-events-none">
         {toasts.map((t) => {
-          const icon = icons[t.type];
+          const Icon = icons[t.type];
           return (
             <div
               key={t.id}

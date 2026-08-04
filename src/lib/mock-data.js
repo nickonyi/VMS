@@ -1,3 +1,17 @@
+function iso(date) {
+  return date.toISOString();
+}
+
+function ymd(date) {
+  return date.toISOString().slice(0, 10);
+}
+
+function addDays(base, days) {
+  const d = new Date(base);
+  d.setDate(d.getDate() + days);
+  return d;
+}
+
 export const seedUsers = [
   {
     id: "u-res-1",

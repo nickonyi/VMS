@@ -22,3 +22,15 @@ export const roleOptions = [
     description: "Manage users and view analytics",
   },
 ];
+
+export const ROLE_HOME = {
+  resident: "/resident",
+  guard: "/guard",
+  admin: "/admin",
+};
+
+export const DEMO = {
+  resident: { email: "resident@demo.com", label: "Resident" },
+  guard: { email: "guard@demo.com", label: "Security Guard" },
+  admin: { email: "admin@demo.com", label: "Administrator" },
+};

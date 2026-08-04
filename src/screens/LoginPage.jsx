@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ShieldCheck,
   Mail,
@@ -13,12 +13,17 @@ import { Input } from "../components/ui/Input";
 import { useToast } from "@/components/ui/Toast";
 import { Button } from "@/components/ui/Button";
 import { roleOptions } from "../lib/utils";
+import { useAuth } from "../context/AuthContext";
+import { ROLE_HOME } from "../lib/utils";
+import { DEMO } from "../lib/utils";
+import { useNavigate } from "react-router";
 
 function LoginPage() {
   const { toast } = useToast();
   const [mode, setMode] = useState("signin");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const { ready, currentUser, login } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,16 +31,35 @@ function LoginPage() {
   const [role, setRole] = useState("resident");
   const [unit, setUnit] = useState("");
   const [phone, setPhone] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (ready && currentUser) {
+      navigate(ROLE_HOME[currentUser.role], { replace: true });
+    }
+  }, [ready, currentUser, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setError(null);
     setLoading(true);
+
+    setTimeout(() => {
+      const result = login(email, password, role);
+
+      if (result.success) {
+        toast(`Welcome back, ${result.user.name.split(" ")[0]}`, "success");
+        navigate(ROLE_HOME[result.user.role], { replace: true });
+      } else {
+        setError(result.error);
+        setLoading(false);
+      }
+    }, 550);
   };
 
   const fillDemo = ({ email, password }) => {
     setMode("signin");
-    setEmail(email);
+    setEmail(DEMO[role].email);
     setPassword(password);
     setError(null);
   };
@@ -255,8 +279,8 @@ function LoginPage() {
                   key={r.value}
                   onClick={() =>
                     fillDemo({
-                      email: `${r.value}@demo.app`,
-                      password: "demo123",
+                      email: `${r.value}@demo.com`,
+                      password: "password",
                     })
                   }
                   className="rounded-lg border border-slate-200 px-2 py-2 text-xs font-medium text-slate-600 hover:bg-slate-50 hover:border-slate-300 transition-colors"

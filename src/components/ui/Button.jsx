@@ -34,6 +34,8 @@ export const Button = forwardRef(
     },
     ref,
   ) => {
+    console.log(loading);
+
     return (
       <button
         ref={ref}
