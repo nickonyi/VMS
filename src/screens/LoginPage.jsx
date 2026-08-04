@@ -14,7 +14,7 @@ import { useToast } from "@/components/ui/Toast";
 import { Button } from "@/components/ui/Button";
 import { roleOptions } from "../lib/utils";
 
-function AuthScreen() {
+function LoginPage() {
   const { toast } = useToast();
   const [mode, setMode] = useState("signin");
   const [loading, setLoading] = useState(false);
@@ -275,4 +275,4 @@ function AuthScreen() {
   );
 }
 
-export default AuthScreen;
+export default LoginPage;

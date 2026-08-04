@@ -1,9 +1,34 @@
 import App from "../App";
-import AuthScreen from "../screens/AuthScreen";
+import RootLayout from "../layout/RootLayout";
+import LoginPage from "../screens/LoginPage";
+import ProtectedRoute from "../layout/ProtectedRoute";
+import ResidentLayout from "../screens/residents/ResidentLayout";
+
 const routes = [
   {
-    path: "/",
-    element: <AuthScreen />,
+    element: <RootLayout />,
+    children: [
+      {
+        path: "/",
+        element: <LoginPage />,
+      },
+
+      {
+        element: <ProtectedRoute />,
+        children: [
+          {
+            path: "/resident",
+            element: <ResidentLayout />,
+            children: [
+              {
+                index: true,
+                element: <ResidentDashboard />,
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
 ];
 
