@@ -15,6 +15,7 @@ import { useAuth } from "../context/AuthContext";
 import { useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router";
 import { cn } from "../lib/utils";
+import { Avatar } from "./ui/Avatar";
 
 const navByRole = {
   resident: [
@@ -73,12 +74,14 @@ const roleLabels = {
 };
 
 function AppShell({ children }) {
-  const { currentUser } = useAuth();
+  const { currentUser, logout } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
   if (!currentUser) return null;
+
+  console.log(currentUser);
 
   const items = navByRole[currentUser.role] ?? [];
 
@@ -122,6 +125,28 @@ function AppShell({ children }) {
           );
         })}
       </nav>
+
+      <div className="p-3 border-t border-slate-200">
+        <div className="flex items-center gap-3 px-2 py-2">
+          <Avatar name={currentUser.name} size="sm" />
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-medium text-slate-900 truncate">
+              {currentUser.name}
+            </p>
+            <p className="text-xs text-slate-500 truncate">
+              {roleLabels[currentUser.role]}
+              {currentUser.unit ? ` · ${currentUser.unit}` : ""}
+            </p>
+          </div>
+        </div>
+        <button
+          onClick={logout}
+          className="mt-2 w-full flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-red-50 hover:text-red-600 transition-colors"
+        >
+          <LogOut className="h-5 w-5" />
+          Sign out
+        </button>
+      </div>
     </div>
   );
 

@@ -93,9 +93,18 @@ export function AuthProvider({ children }) {
     [users],
   );
 
+  const logout = useCallback(() => {
+    setCurrentUser(null);
+    try {
+      window.localStorage.removeItem(SESSION_KEY);
+    } catch {
+      // ignore
+    }
+  }, []);
+
   const value = useMemo(
-    () => ({ ready, currentUser, users, passes, login }),
-    [ready, currentUser, users, passes, login],
+    () => ({ ready, currentUser, users, passes, login, logout }),
+    [ready, currentUser, users, passes, login, logout],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

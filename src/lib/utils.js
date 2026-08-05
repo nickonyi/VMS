@@ -34,3 +34,41 @@ export const DEMO = {
   guard: { email: "guard@demo.com", label: "Security Guard" },
   admin: { email: "admin@demo.com", label: "Administrator" },
 };
+
+export function formatDate(value) {
+  const d = typeof value === "string" ? new Date(value) : value;
+  return d.toLocaleDateString("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
+export function formatTime(value) {
+  const d = typeof value === "string" ? new Date(value) : value;
+  return d.toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+  });
+}
+
+export function formatDateTime(value) {
+  const d = typeof value === "string" ? new Date(value) : value;
+  return d.toLocaleString("en-US", {
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  });
+}
+
+export function initials(name) {
+  return name
+    .split(" ")
+    .map((p) => p[0])
+    .filter(Boolean)
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+}
