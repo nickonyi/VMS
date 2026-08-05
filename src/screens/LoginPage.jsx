@@ -59,7 +59,7 @@ function LoginPage() {
 
   const fillDemo = ({ email, password }) => {
     setMode("signin");
-    setEmail(DEMO[role].email);
+    setEmail(email);
     setPassword(password);
     setError(null);
   };

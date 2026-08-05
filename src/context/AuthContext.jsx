@@ -68,9 +68,10 @@ export function AuthProvider({ children }) {
       const user = users.find(
         (u) =>
           u.email.toLowerCase() === email.trim().toLowerCase() &&
-          u.password === password &&
-          u.role === role,
+          u.password === password,
       );
+
+      console.log(role);
 
       if (!user || !user.active) {
         return {

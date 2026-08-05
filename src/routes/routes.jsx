@@ -6,6 +6,9 @@ import ResidentLayout from "../screens/residents/ResidentLayout";
 import ResidentDashboard from "../screens/residents/Page";
 import HistoryPage from "../screens/residents/history/HistoryPage";
 import CreateVisitorPage from "../screens/residents/new/CreateVisitorPage";
+import GuardLayout from "../screens/guard/GuardLayout";
+import GuardHistoryPage from "../screens/guard/history/GuardHistoryPage";
+import GuardScanScreen from "../screens/guard/scan/GuardScanScreen";
 
 const routes = [
   {
@@ -34,6 +37,24 @@ const routes = [
               {
                 path: "history",
                 element: <HistoryPage />,
+              },
+            ],
+          },
+          {
+            path: "/guard",
+            element: <GuardLayout />,
+            children: [
+              {
+                index: true,
+                element: <GuardScanScreen />,
+              },
+              {
+                path: "verify",
+                element: <CreateVisitorPage />,
+              },
+              {
+                path: "history",
+                element: <GuardHistoryPage />,
               },
             ],
           },
