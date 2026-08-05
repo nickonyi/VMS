@@ -4,8 +4,8 @@ import LoginPage from "../screens/LoginPage";
 import ProtectedRoute from "../layout/ProtectedRoute";
 import ResidentLayout from "../screens/residents/ResidentLayout";
 import ResidentDashboard from "../screens/residents/Page";
-import NewPassPage from "../screens/residents/new/NewPassPage";
 import HistoryPage from "../screens/residents/history/HistoryPage";
+import CreateVisitorPage from "../screens/residents/new/CreateVisitorPage";
 
 const routes = [
   {
@@ -29,7 +29,7 @@ const routes = [
               },
               {
                 path: "new",
-                element: <NewPassPage />,
+                element: <CreateVisitorPage />,
               },
               {
                 path: "history",
