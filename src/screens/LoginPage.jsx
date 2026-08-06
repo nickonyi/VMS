@@ -23,7 +23,7 @@ function LoginPage() {
   const [mode, setMode] = useState("signin");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const { ready, currentUser, login } = useAuth();
+  const { ready, currentUser, signin } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -39,22 +39,25 @@ function LoginPage() {
     }
   }, [ready, currentUser, navigate]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     setError(null);
     setLoading(true);
 
-    setTimeout(() => {
-      const result = login(email, password, role);
+    const result = await signin(email, password);
 
-      if (result.success) {
-        toast(`Welcome back, ${result.user.name.split(" ")[0]}`, "success");
-        navigate(ROLE_HOME[result.user.role], { replace: true });
-      } else {
-        setError(result.error);
-        setLoading(false);
-      }
-    }, 550);
+    if (result.success) {
+      toast(`Welcome back, ${result.user.fullName.split(" ")[0]}`, "success");
+
+      navigate(ROLE_HOME[result.user.role], {
+        replace: true,
+      });
+    } else {
+      setError(result.error);
+    }
+
+    setLoading(false);
   };
 
   const fillDemo = ({ email, password }) => {

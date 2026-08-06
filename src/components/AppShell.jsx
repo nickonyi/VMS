@@ -74,7 +74,7 @@ const roleLabels = {
 };
 
 function AppShell({ children }) {
-  const { currentUser, logout } = useAuth();
+  const { currentUser, signout } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -126,10 +126,10 @@ function AppShell({ children }) {
 
       <div className="p-3 border-t border-slate-200">
         <div className="flex items-center gap-3 px-2 py-2">
-          <Avatar name={currentUser.name} size="sm" />
+          <Avatar name={currentUser.fullName} size="sm" />
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium text-slate-900 truncate">
-              {currentUser.name}
+              {currentUser.fullName}
             </p>
             <p className="text-xs text-slate-500 truncate">
               {roleLabels[currentUser.role]}
@@ -138,7 +138,7 @@ function AppShell({ children }) {
           </div>
         </div>
         <button
-          onClick={logout}
+          onClick={signout}
           className="mt-2 w-full flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-red-50 hover:text-red-600 transition-colors"
         >
           <LogOut className="h-5 w-5" />

@@ -6,106 +6,74 @@ import {
   useMemo,
   useState,
 } from "react";
-import { seedUsers, generateSeedPasses } from "../lib/mock-data";
+import * as authApi from "../api/authApi";
 
 const AuthContext = createContext(null);
 
-const STORAGE_KEY = "vms:data:v1";
-const SESSION_KEY = "vms:session:v1";
-
 export function AuthProvider({ children }) {
   const [ready, setReady] = useState(false);
-  const [users, setUsers] = useState(seedUsers);
   const [passes, setPasses] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
 
-  const loadPersist = () => {
-    try {
-      const raw = window.localStorage.getItem(STORAGE_KEY);
-      if (raw) return JSON.parse(raw);
-    } catch (error) {}
-
-    return { users: seedUsers, passes: generateSeedPasses() };
-  };
-
-  let idSeq = Date.now();
-
-  const uid = (prefix) => {
-    idSeq += 1;
-    return `${prefix}-${idSeq.toString(36)}`;
-  };
+  const SESSION_KEY = "vms:user";
 
   useEffect(() => {
-    const data = loadPersist();
-    setUsers(data.users);
-    setPasses(data.passes);
+    const init = async () => {
+      try {
+        const data = await authApi.getCurrentUser();
 
-    try {
-      const sessionId = window.localStorage.getItem(SESSION_KEY);
-
-      if (sessionId) {
-        const found = data.users.find((u) => u.id === sessionId) ?? null;
-        setCurrentUser(found);
+        setCurrentUser(data.user);
+      } catch {
+        setCurrentUser(null);
       }
-    } catch (error) {
-      console.log(error);
+
+      setReady(true);
+    };
+
+    init();
+  }, []);
+
+  useEffect(() => {
+    try {
+      const storedUser = localStorage.getItem(SESSION_KEY);
+
+      if (storedUser) {
+        setCurrentUser(JSON.parse(storedUser));
+      }
+    } catch (err) {
+      console.log(err);
     }
+
     setReady(true);
   }, []);
 
-  useEffect(() => {
-    if (!ready) return;
+  const signin = useCallback(async (email, password, role) => {
     try {
-      window.localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify({ users, passes }),
-      );
-    } catch {}
-  }, [users, passes, ready]);
+      const data = await authApi.signin(email, password);
+      setCurrentUser(data.user);
 
-  const login = useCallback(
-    (email, password, role) => {
-      const user = users.find(
-        (u) =>
-          u.email.toLowerCase() === email.trim().toLowerCase() &&
-          u.password === password,
-      );
-
-      console.log(role);
-
-      if (!user || !user.active) {
-        return {
-          success: false,
-          error: "Invalid email or password.",
-        };
-      }
-
-      setCurrentUser(user);
-
-      try {
-        window.localStorage.setItem(SESSION_KEY, user.id);
-      } catch {}
+      localStorage.setItem(SESSION_KEY, JSON.stringify(data.user));
 
       return {
         success: true,
-        user,
+        user: data.user,
       };
-    },
-    [users],
-  );
-
-  const logout = useCallback(() => {
-    setCurrentUser(null);
-    try {
-      window.localStorage.removeItem(SESSION_KEY);
-    } catch {
-      // ignore
+    } catch (err) {
+      return {
+        success: false,
+        error: err.message,
+      };
     }
   }, []);
 
+  const signout = useCallback(async () => {
+    await authApi.signout();
+    setCurrentUser(null);
+  }, []);
+
   const value = useMemo(
-    () => ({ ready, currentUser, users, passes, login, logout }),
-    [ready, currentUser, users, passes, login, logout],
+    () => ({ ready, currentUser, signin, signout }),
+    [ready, currentUser, signin, signout],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
