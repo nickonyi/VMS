@@ -59,11 +59,10 @@ function CreateVisitorPage() {
         expiresAt: combineDateAndTime(form.visit_date, form.expiry_time),
       };
 
-      console.log(payload);
-
       const pass = await createPass(payload);
+
       toast("Visitor pass created successfully.", "success");
-      //navigate(`/resident/pass/${pass.id}`);
+      navigate(`/resident/pass/${pass.pass.id}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to create pass.");
     } finally {

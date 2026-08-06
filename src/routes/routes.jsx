@@ -14,6 +14,7 @@ import AdminDashboard from "../screens/admin/AdminDashboard";
 import AdminVisitorsScreen from "../screens/admin/visitors/AdminVisitorsScreen";
 import AdminUsersScreen from "../screens/admin/users/AdminUsersScreen";
 import AdminAnalyticsScreen from "../screens/admin/analytics/AdminAnalyticsScreen";
+import VisitorDetailsScreen from "../screens/residents/pass/VisitorDetailsScreen";
 
 const routes = [
   {
@@ -38,6 +39,10 @@ const routes = [
               {
                 path: "new",
                 element: <CreateVisitorPage />,
+              },
+              {
+                path: "pass/:id",
+                element: <VisitorDetailsScreen />,
               },
               {
                 path: "history",
