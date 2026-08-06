@@ -68,6 +68,7 @@ export function AuthProvider({ children }) {
 
   const signout = useCallback(async () => {
     await authApi.signout();
+    localStorage.removeItem(SESSION_KEY);
     setCurrentUser(null);
   }, []);
 
