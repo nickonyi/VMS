@@ -63,6 +63,10 @@ export function formatDateTime(value) {
   });
 }
 
+export function combineDateAndTime(date, time) {
+  return `${date}T${time}:00`;
+}
+
 export function initials(name) {
   return name
     .split(" ")

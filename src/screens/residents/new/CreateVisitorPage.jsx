@@ -11,6 +11,8 @@ import {
 } from "../../../components/ui/Card";
 import { Input, Textarea } from "../../../components/ui/Input";
 import { Button } from "../../../components/ui/Button";
+import { createPass } from "../../../api/passApi";
+import { combineDateAndTime } from "../../../lib/utils";
 
 function CreateVisitorPage() {
   const { currentUser } = useAuth();
@@ -36,7 +38,38 @@ function CreateVisitorPage() {
     setForm((f) => ({ ...f, [key]: value }));
   }
 
-  const handleSubmit = async (e) => {};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!currentUser) return;
+    setError(null);
+    setSaving(true);
+    try {
+      console.log(form);
+
+      const payload = {
+        guestName: form.guest_name,
+        guestPhone: form.guest_phone,
+        numberOfGuests: Number(form.number_of_guests),
+        vehicleReg: form.vehicle_reg,
+        purpose: form.purpose,
+        expectedArrivalAt: combineDateAndTime(
+          form.visit_date,
+          form.arrival_time,
+        ),
+        expiresAt: combineDateAndTime(form.visit_date, form.expiry_time),
+      };
+
+      console.log(payload);
+
+      const pass = await createPass(payload);
+      toast("Visitor pass created successfully.", "success");
+      //navigate(`/resident/pass/${pass.id}`);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to create pass.");
+    } finally {
+      setSaving(false);
+    }
+  };
   return (
     <div className="max-w-2xl mx-auto space-y-6">
       <div>
