@@ -15,6 +15,7 @@ import AdminVisitorsScreen from "../screens/admin/visitors/AdminVisitorsScreen";
 import AdminUsersScreen from "../screens/admin/users/AdminUsersScreen";
 import AdminAnalyticsScreen from "../screens/admin/analytics/AdminAnalyticsScreen";
 import VisitorDetailsScreen from "../screens/residents/pass/VisitorDetailsScreen";
+import GuardVerifyScreen from "../screens/guard/verify/GuardVerifyScreen";
 
 const routes = [
   {
@@ -60,7 +61,7 @@ const routes = [
               },
               {
                 path: "verify",
-                element: <CreateVisitorPage />,
+                element: <GuardVerifyScreen />,
               },
               {
                 path: "history",

@@ -2,9 +2,11 @@ import { useState } from "react";
 import { Scanner } from "@yudiel/react-qr-scanner";
 import { ScanLine, Keyboard, X, RefreshCw } from "lucide-react";
 import { useToast } from "../../../components/ui/Toast";
+import { usePassByToken } from "../../../hooks/useVisitorPasses";
 import { Button } from "../../../components/ui/Button";
 import { Card, CardContent } from "../../../components/ui/Card";
-import { useNavigate } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
+import DetailRow from "../../../components/ui/DetailRow";
 
 function GuardScanScreen() {
   const navigate = useNavigate();
@@ -13,7 +15,12 @@ function GuardScanScreen() {
   const [manualToken, setManualToken] = useState("");
 
   const handleResult = () => {};
-  const handleManualSubmit = (e) => {};
+  const handleManualSubmit = (e) => {
+    e.preventDefault();
+    if (manualToken.trim()) {
+      navigate(`/guard/verify?t=${manualToken.trim()}`);
+    }
+  };
 
   return (
     <div className="max-w-xl mx-auto space-y-6">
