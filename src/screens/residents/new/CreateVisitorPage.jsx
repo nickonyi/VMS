@@ -44,8 +44,6 @@ function CreateVisitorPage() {
     setError(null);
     setSaving(true);
     try {
-      console.log(form);
-
       const payload = {
         guestName: form.guest_name,
         guestPhone: form.guest_phone,

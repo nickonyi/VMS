@@ -41,7 +41,7 @@ const routes = [
                 element: <CreateVisitorPage />,
               },
               {
-                path: "pass/:id",
+                path: "pass/:passId",
                 element: <VisitorDetailsScreen />,
               },
               {

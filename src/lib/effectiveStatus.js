@@ -1,4 +1,4 @@
-export function effectiveStatus(pass) {
+export const effectiveStatus = (pass) => {
   if (pass.status === "pending") {
     const now = new Date();
     const visitDate = pass.visit_date; // yyyy-mm-dd
@@ -6,9 +6,9 @@ export function effectiveStatus(pass) {
     if (now > expiry) return "expired";
   }
   return pass.status;
-}
+};
 
-export function isActionable(pass) {
+export const isActionable = (pass) => {
   const s = effectiveStatus(pass);
   return s === "pending" || s === "checked_in";
-}
+};
