@@ -37,6 +37,7 @@ export const DEMO = {
 
 export function formatDate(value) {
   const d = typeof value === "string" ? new Date(value) : value;
+
   return d.toLocaleDateString("en-US", {
     weekday: "short",
     month: "short",
@@ -47,6 +48,7 @@ export function formatDate(value) {
 
 export function formatTime(value) {
   const d = typeof value === "string" ? new Date(value) : value;
+
   return d.toLocaleTimeString("en-US", {
     hour: "numeric",
     minute: "2-digit",

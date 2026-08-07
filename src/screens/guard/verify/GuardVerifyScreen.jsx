@@ -52,7 +52,6 @@ function GuardVerifyScreen() {
 
     try {
       const res = await checkInPass(pass.id);
-      console.log(res);
 
       toast(`${pass.guest_name} checked in successfully.`, "success");
 
@@ -104,7 +103,11 @@ function GuardVerifyScreen() {
   }
 
   const status = effectiveStatus(pass);
-  const residentName = pass.resident?.full_name ?? "Unknown resident";
+  console.log(pass);
+
+  const residentName = pass.resident_name
+    ? pass.resident_name
+    : "Unknown resident";
 
   let banner = null;
   let action = null;
@@ -210,7 +213,7 @@ function GuardVerifyScreen() {
           <DetailRow
             icon={<Home className="h-4 w-4" />}
             label="Apartment"
-            value={`Unit ${pass.unit}`}
+            value={`Unit ${pass.unit_number}`}
           />
           <DetailRow
             icon={<User className="h-4 w-4" />}
@@ -225,12 +228,12 @@ function GuardVerifyScreen() {
           <DetailRow
             icon={<Clock className="h-4 w-4" />}
             label="Arrival time"
-            value={formatTime(`2000-01-01T${pass.arrival_time}`)}
+            value={formatTime(pass.arrival_time)}
           />
           <DetailRow
             icon={<Clock className="h-4 w-4" />}
             label="Expiry time"
-            value={formatTime(`2000-01-01T${pass.expiry_time}`)}
+            value={formatTime(pass.expiry_time)}
           />
           {pass.guest_phone && (
             <DetailRow

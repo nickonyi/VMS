@@ -64,5 +64,11 @@ export const usePassByToken = (token) => {
     reload: load,
   };
 };
-export const checkInPass = async (token) => {};
-export const checkOutPass = async (token) => {};
+
+export const checkInPass = async (passId) => {
+  return await passApi.checkInPass(passId);
+};
+
+export const checkOutPass = async (passId) => {
+  return await passApi.checkOutPass(passId);
+};

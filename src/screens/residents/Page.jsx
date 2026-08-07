@@ -155,8 +155,7 @@ function Section({ title, passes, loading, onOpen }) {
                       {p.guest_name}
                     </p>
                     <p className="text-sm text-slate-500 truncate">
-                      {formatDate(p.visit_date)} ·{" "}
-                      {formatTime(`2000-01-01T${p.arrival_time}`)}
+                      {formatDate(p.visit_date)} · {formatTime(p.arrival_time)}
                       {p.number_of_guests > 1
                         ? ` · ${p.number_of_guests} guests`
                         : ""}
