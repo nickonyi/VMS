@@ -14,7 +14,7 @@ import { Card, CardContent } from "../../../components/ui/Card";
 
 function HistoryPage() {
   const { currentUser } = useAuth();
-  const { navigate } = useNavigate();
+  const navigate = useNavigate();
   const { passes, loading } = useResidentPasses();
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("all");
@@ -70,7 +70,7 @@ function HistoryPage() {
       </div>
 
       <Card>
-        <CardContent className="p-0">
+        <CardContent className="p-0 cursor-pointer">
           {loading ? (
             <div className="flex justify-center py-12">
               <Spinner className="h-8 w-8" />
@@ -86,7 +86,7 @@ function HistoryPage() {
               }
             />
           ) : (
-            <ul className="divide-y divide-slate-100">
+            <ul className="divide-y divide-slate-100 cursor-pointer">
               {filtered.map((p) => (
                 <li key={p.id}>
                   <button

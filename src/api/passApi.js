@@ -113,3 +113,18 @@ export const checkOutPass = async (passId) => {
 
   return data;
 };
+
+export const cancelPass = async (passId) => {
+  const res = await fetch(`${API_URL}/${passId}/cancel`, {
+    method: "PATCH",
+    credentials: "include",
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.message || "Failed to cancel visitor pass.");
+  }
+
+  return data;
+};

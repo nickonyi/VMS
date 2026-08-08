@@ -72,3 +72,7 @@ export const checkInPass = async (passId) => {
 export const checkOutPass = async (passId) => {
   return await passApi.checkOutPass(passId);
 };
+
+export const cancelPass = async (passId) => {
+  return await passApi.cancelPass(passId);
+};

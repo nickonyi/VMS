@@ -24,6 +24,7 @@ import { StatusBadge } from "../../../components/ui/StatusBadge";
 import { QRCode } from "../../../components/QRCode";
 import { Button } from "../../../components/ui/Button";
 import { Modal } from "../../../components/ui/Modal";
+import { cancelPass, useResidentPasses } from "../../../hooks/useVisitorPasses";
 import {
   Card,
   CardHeader,
@@ -70,8 +71,25 @@ function VisitorDetailsScreen() {
     };
   }, [passId, toast]);
 
-  const handleCancel = () => {};
-  console.log(pass);
+  const handleCancel = async () => {
+    if (!pass) return;
+
+    setCancelling(true);
+
+    try {
+      await cancelPass(pass.id);
+      toast("Visitor pass cancelled successfully.", "success");
+      setConfirmCancel(false);
+      navigate("/resident");
+    } catch (err) {
+      toast(
+        err instanceof Error ? err.message : "Failed to cancel visitor pass.",
+        "error",
+      );
+    } finally {
+      setCancelling(false);
+    }
+  };
 
   if (loading) {
     return (
