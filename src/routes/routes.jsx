@@ -3,7 +3,7 @@ import RootLayout from "../screens/RootLayout";
 import LoginPage from "../screens/LoginPage";
 import ProtectedRoute from "../layout/ProtectedRoute";
 import ResidentLayout from "../screens/residents/ResidentLayout";
-import ResidentDashboard from "../screens/residents/Page";
+import ResidentDashboard from "../screens/residents/ResidentDashBoardPage";
 import HistoryPage from "../screens/residents/history/HistoryPage";
 import CreateVisitorPage from "../screens/residents/new/CreateVisitorPage";
 import GuardLayout from "../screens/guard/GuardLayout";

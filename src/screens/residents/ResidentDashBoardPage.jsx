@@ -68,6 +68,7 @@ function ResidentDashboard() {
       bg: "bg-slate-100",
     },
   ];
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -76,8 +77,10 @@ function ResidentDashboard() {
             Welcome back, {currentUser?.fullName.split(" ")[0]}
           </h1>
           <p className="mt-1 text-sm text-slate-500">
-            {currentUser?.unit ? `Unit ${currentUser.unit} · ` : ""}Manage your
-            visitor passes below.
+            {currentUser?.unit_number
+              ? `Unit ${currentUser.unit_number} · `
+              : ""}
+            Manage your visitor passes below.
           </p>
         </div>
         <Button onClick={() => navigate("/resident/new")} size="md">

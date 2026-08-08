@@ -90,3 +90,12 @@ export function initials(name) {
     .join("")
     .toUpperCase();
 }
+
+export const filters = [
+  { value: "all", label: "All" },
+  { value: "pending", label: "Pending" },
+  { value: "checked_in", label: "Checked In" },
+  { value: "checked_out", label: "Checked Out" },
+  { value: "expired", label: "Expired" },
+  { value: "cancelled", label: "Cancelled" },
+];
