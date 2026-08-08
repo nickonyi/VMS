@@ -224,12 +224,12 @@ function VisitorDetailsScreen() {
             <DetailRow
               icon={<Clock className="h-4 w-4" />}
               label="Expected arrival"
-              value={formatTime(`2000-01-01T${pass.arrival_time}`)}
+              value={formatTime(pass.arrival_time)}
             />
             <DetailRow
               icon={<Clock className="h-4 w-4" />}
               label="Expiry time"
-              value={formatTime(`2000-01-01T${pass.expiry_time}`)}
+              value={formatTime(pass.expiry_time)}
             />
             {pass.guest_phone && (
               <DetailRow
@@ -255,7 +255,7 @@ function VisitorDetailsScreen() {
             <DetailRow
               icon={<Home className="h-4 w-4" />}
               label="Unit"
-              value={pass.unit}
+              value={pass.unit_number}
             />
 
             {pass.checked_in_at && (

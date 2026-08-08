@@ -45,6 +45,12 @@ function GuardVerifyScreen() {
   const { pass, loading, error, reload } = usePassByToken(token);
   const [processing, setProcessing] = useState(false);
 
+  //console.log("KEYS:", Object.keys(pass));
+  //console.log("CHECKED IN:", pass.checked_in_at);
+  //console.log("CREATED:", pass.created_at);
+
+  //console.log(formatDateTime(pass.checked_in_at));
+
   const handleCheckIn = async () => {
     if (!pass) return;
 
@@ -103,13 +109,12 @@ function GuardVerifyScreen() {
   }
 
   const status = effectiveStatus(pass);
-  console.log(pass);
 
   const residentName = pass.resident_name
     ? pass.resident_name
     : "Unknown resident";
 
-  let banner = null;
+  let banner = {};
   let action = null;
 
   if (status === "pending") {
@@ -130,10 +135,13 @@ function GuardVerifyScreen() {
       </Button>
     );
   } else if (status === "checked_in") {
+    const date = pass.checked_in_at ?? pass.created_at;
+    console.log("date for check-in", date);
+
     banner = {
       type: "warning",
       title: "Already Checked In",
-      message: `This visitor was checked in at ${formatDateTime(pass.checked_in_at ?? pass.created_at)}.`,
+      message: `This visitor was checked in at ${formatDateTime(date)}.`,
     };
     action = (
       <Button

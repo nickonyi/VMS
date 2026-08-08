@@ -56,13 +56,25 @@ export function formatTime(value) {
 }
 
 export function formatDateTime(value) {
-  const d = typeof value === "string" ? new Date(value) : value;
-  return d.toLocaleString("en-US", {
+  if (!value) return "—";
+
+  const [datePart, timePart] = value.split("T");
+
+  const [year, month, day] = datePart.split("-");
+  const [hour, minute] = timePart.split(":");
+
+  const monthName = new Date(
+    Number(year),
+    Number(month) - 1,
+    Number(day),
+  ).toLocaleString("en-US", {
     month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
   });
+
+  const hour12 = Number(hour) % 12 || 12;
+  const period = Number(hour) >= 12 ? "PM" : "AM";
+
+  return `${monthName} ${Number(day)}, ${hour12}:${minute} ${period}`;
 }
 
 export function combineDateAndTime(date, time) {
