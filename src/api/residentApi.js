@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000/api/passes";
+const API_URL = "http://localhost:3000/api/resident";
 
 export const createPass = async (payload) => {
   const res = await fetch(API_URL, {

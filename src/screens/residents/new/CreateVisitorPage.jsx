@@ -11,7 +11,7 @@ import {
 } from "../../../components/ui/Card";
 import { Input, Textarea } from "../../../components/ui/Input";
 import { Button } from "../../../components/ui/Button";
-import { createPass } from "../../../api/passApi";
+import { createPass } from "../../../api/residentApi";
 import { combineDateAndTime } from "../../../lib/utils";
 
 function CreateVisitorPage() {

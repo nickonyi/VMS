@@ -7,21 +7,24 @@ import { EmptyState } from "../../../components/ui/EmptyState";
 import { Spinner } from "../../../components/ui/Spinner";
 import { Input } from "../../../components/ui/Input";
 import { formatDate, formatTime, formatDateTime } from "../../../lib/utils";
+import { useVisitHistory } from "../../../hooks/useVisitHistory";
 
 function GuardHistoryPage() {
-  const [passes, loading] = useState([]);
+  const { visits, loading } = useVisitHistory();
   const [search, setSearch] = useState("");
 
   const filtered = useMemo(() => {
-    return passes
-      .map((p) => ({ ...p, eff: effectiveStatus(p) }))
+    return visits
+      .map((v) => ({ ...v, eff: effectiveStatus(v) }))
       .filter(
-        (p) =>
+        (v) =>
           !search ||
-          p.guest_name.toLowerCase().includes(search.toLowerCase()) ||
-          p.unit.toLowerCase().includes(search.toLowerCase()),
+          v.guest_name.toLowerCase().includes(search.toLowerCase()) ||
+          v.unit.toLowerCase().includes(search.toLowerCase()),
       );
-  }, [passes, search]);
+  }, [visits, search]);
+
+  console.log(visits);
 
   return (
     <div className="space-y-6">
@@ -64,7 +67,7 @@ function GuardHistoryPage() {
                       </p>
                       <p className="text-sm text-slate-500 truncate">
                         Unit {p.unit} · {formatDate(p.visit_date)} ·{" "}
-                        {formatTime(`2000-01-01T${p.arrival_time}`)}
+                        {formatTime(p.visit_date)}
                       </p>
                       {p.checked_in_at && (
                         <p className="text-xs text-slate-400 mt-0.5">

@@ -17,7 +17,7 @@ import {
   X,
   XCircle,
 } from "lucide-react";
-import { getVisitorPass } from "../../../api/passApi";
+import { getVisitorPass } from "../../../api/residentApi";
 import { effectiveStatus } from "../../../lib/effectiveStatus";
 import { Spinner } from "../../../components/ui/Spinner";
 import { StatusBadge } from "../../../components/ui/StatusBadge";

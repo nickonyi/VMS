@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import * as passApi from "../api/passApi";
+import * as residentApi from "../api/residentApi";
 
 export function useResidentPasses() {
   const [passes, setPasses] = useState([]);
@@ -10,7 +10,7 @@ export function useResidentPasses() {
     try {
       setLoading(true);
 
-      const response = await passApi.getMyVisitorPasses();
+      const response = await residentApi.getMyVisitorPasses();
 
       setPasses(response.data);
     } catch (err) {
@@ -24,11 +24,13 @@ export function useResidentPasses() {
     load();
   }, [load]);
 
+  console.log(passes);
+
   return { passes, loading, error, reload: load };
 }
 
 export const createPass = async (payload) => {
-  return await passApi.createPass(payload);
+  return await residentApi.createPass(payload);
 };
 
 export const usePassByToken = (token) => {
@@ -43,7 +45,7 @@ export const usePassByToken = (token) => {
       setLoading(true);
       setError(null);
 
-      const response = await passApi.getPassByToken(token);
+      const response = await residentApi.getPassByToken(token);
 
       setPass(response.data);
     } catch (err) {
@@ -66,13 +68,13 @@ export const usePassByToken = (token) => {
 };
 
 export const checkInPass = async (passId) => {
-  return await passApi.checkInPass(passId);
+  return await residentApi.checkInPass(passId);
 };
 
 export const checkOutPass = async (passId) => {
-  return await passApi.checkOutPass(passId);
+  return await residentApi.checkOutPass(passId);
 };
 
 export const cancelPass = async (passId) => {
-  return await passApi.cancelPass(passId);
+  return await residentApi.cancelPass(passId);
 };
