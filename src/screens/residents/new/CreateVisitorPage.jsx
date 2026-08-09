@@ -13,6 +13,8 @@ import { Input, Textarea } from "../../../components/ui/Input";
 import { Button } from "../../../components/ui/Button";
 import { createPass } from "../../../api/residentApi";
 import { combineDateAndTime } from "../../../lib/utils";
+import { VISIT_PURPOSES } from "../../../lib/utils";
+import { Select } from "../../../components/ui/Input";
 
 function CreateVisitorPage() {
   const { currentUser } = useAuth();
@@ -165,13 +167,21 @@ function CreateVisitorPage() {
               value={form.vehicle_reg}
               onChange={(e) => update("vehicle_reg", e.target.value)}
             />
-            <Textarea
-              label="Visit purpose (optional)"
+            <Select
+              label="Visit purpose"
               name="purpose"
-              placeholder="e.g. Family visit, delivery, maintenance"
               value={form.purpose}
               onChange={(e) => update("purpose", e.target.value)}
-            />
+              required
+            >
+              <option value="">Select visit purpose</option>
+
+              {VISIT_PURPOSES.map((purpose) => (
+                <option key={purpose.value} value={purpose.value}>
+                  {purpose.label}
+                </option>
+              ))}
+            </Select>
           </CardContent>
         </Card>
 

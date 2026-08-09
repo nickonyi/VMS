@@ -61,42 +61,6 @@ export const getMyVisitorPasses = async () => {
   return data;
 };
 
-export const checkInPass = async (passId) => {
-  const res = await fetch(`${API_URL}/${passId}/check-in`, {
-    method: "POST",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  const data = await res.json();
-
-  if (!res.ok) {
-    throw new Error(data.message || "Check-in failed.");
-  }
-
-  return data;
-};
-
-export const checkOutPass = async (passId) => {
-  const res = await fetch(`${API_URL}/${passId}/check-out`, {
-    method: "POST",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  const data = await res.json();
-
-  if (!res.ok) {
-    throw new Error(data.message || "Check-out failed.");
-  }
-
-  return data;
-};
-
 export const cancelPass = async (passId) => {
   const res = await fetch(`${API_URL}/${passId}/cancel`, {
     method: "PATCH",

@@ -68,3 +68,11 @@ export const usePassByManualCode = (code) => {
     reload: load,
   };
 };
+
+export const checkInPass = async (passId) => {
+  return await guardApi.checkInPass(passId);
+};
+
+export const checkOutPass = async (passId) => {
+  return await guardApi.checkOutPass(passId);
+};

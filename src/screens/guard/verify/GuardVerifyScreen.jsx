@@ -29,7 +29,7 @@ import { StatusBadge } from "../../../components/ui/StatusBadge";
 import { formatDate, formatTime, formatDateTime } from "../../../lib/utils";
 import { Spinner } from "../../../components/ui/Spinner";
 import DetailRow from "../../../components/ui/DetailRow";
-import { checkInPass, checkOutPass } from "../../../hooks/useVisitorPasses";
+import { checkInPass, checkOutPass } from "../../../api/guardApi";
 import { usePassByManualCode } from "../../../hooks/guard/useGuardVisits";
 import { useNavigate, useSearchParams } from "react-router";
 import { useState } from "react";

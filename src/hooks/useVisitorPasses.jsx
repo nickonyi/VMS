@@ -33,14 +33,6 @@ export const createPass = async (payload) => {
   return await residentApi.createPass(payload);
 };
 
-export const checkInPass = async (passId) => {
-  return await residentApi.checkInPass(passId);
-};
-
-export const checkOutPass = async (passId) => {
-  return await residentApi.checkOutPass(passId);
-};
-
 export const cancelPass = async (passId) => {
   return await residentApi.cancelPass(passId);
 };

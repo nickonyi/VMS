@@ -23,6 +23,14 @@ export const roleOptions = [
   },
 ];
 
+export const VISIT_PURPOSES = [
+  { value: "family", label: "Family visit" },
+  { value: "delivery", label: "Delivery" },
+  { value: "maintenance", label: "Maintenance" },
+  { value: "business", label: "Business" },
+  { value: "other", label: "Other" },
+];
+
 export const ROLE_HOME = {
   resident: "/resident",
   guard: "/guard",
