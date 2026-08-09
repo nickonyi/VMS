@@ -7,7 +7,7 @@ import { EmptyState } from "../../../components/ui/EmptyState";
 import { Spinner } from "../../../components/ui/Spinner";
 import { Input } from "../../../components/ui/Input";
 import { formatDate, formatTime, formatDateTime } from "../../../lib/utils";
-import { useVisitHistory } from "../../../hooks/useVisitHistory";
+import { useVisitHistory } from "../../../hooks/guard/useGuardVisits";
 
 function GuardHistoryPage() {
   const { visits, loading } = useVisitHistory();
@@ -20,7 +20,7 @@ function GuardHistoryPage() {
         (v) =>
           !search ||
           v.guest_name.toLowerCase().includes(search.toLowerCase()) ||
-          v.unit.toLowerCase().includes(search.toLowerCase()),
+          v.unit_number.toLowerCase().includes(search.toLowerCase()),
       );
   }, [visits, search]);
 

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Scanner } from "@yudiel/react-qr-scanner";
 import { ScanLine, Keyboard, X, RefreshCw } from "lucide-react";
 import { useToast } from "../../../components/ui/Toast";
-import { usePassByToken } from "../../../hooks/useVisitorPasses";
+import { usePassByManualCode } from "../../../hooks/guard/useGuardVisits";
 import { Button } from "../../../components/ui/Button";
 import { Card, CardContent } from "../../../components/ui/Card";
 import { useNavigate, useSearchParams } from "react-router";
@@ -17,6 +17,8 @@ function GuardScanScreen() {
   const handleResult = () => {};
   const handleManualSubmit = (e) => {
     e.preventDefault();
+    console.log(manualToken.trim());
+
     if (manualToken.trim()) {
       navigate(`/guard/verify?t=${manualToken.trim()}`);
     }

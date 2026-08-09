@@ -61,23 +61,6 @@ export const getMyVisitorPasses = async () => {
   return data;
 };
 
-export const getPassByToken = async (token) => {
-  const res = await fetch(`${API_URL}/verify?t=${encodeURIComponent(token)}`, {
-    credentials: "include",
-  });
-
-  const data = await res.json();
-
-  if (!res.ok) {
-    throw {
-      status: res.status,
-      ...data,
-    };
-  }
-
-  return data;
-};
-
 export const checkInPass = async (passId) => {
   const res = await fetch(`${API_URL}/${passId}/check-in`, {
     method: "POST",

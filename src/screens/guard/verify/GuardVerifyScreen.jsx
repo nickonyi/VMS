@@ -29,27 +29,18 @@ import { StatusBadge } from "../../../components/ui/StatusBadge";
 import { formatDate, formatTime, formatDateTime } from "../../../lib/utils";
 import { Spinner } from "../../../components/ui/Spinner";
 import DetailRow from "../../../components/ui/DetailRow";
-import {
-  usePassByToken,
-  checkInPass,
-  checkOutPass,
-} from "../../../hooks/useVisitorPasses";
+import { checkInPass, checkOutPass } from "../../../hooks/useVisitorPasses";
+import { usePassByManualCode } from "../../../hooks/guard/useGuardVisits";
 import { useNavigate, useSearchParams } from "react-router";
 import { useState } from "react";
 
 function GuardVerifyScreen() {
   const [searchParams] = useSearchParams();
-  const token = searchParams.get("t");
+  const code = searchParams.get("t");
   const { toast } = useToast();
   const navigate = useNavigate();
-  const { pass, loading, error, reload } = usePassByToken(token);
+  const { pass, loading, error, reload } = usePassByManualCode(code);
   const [processing, setProcessing] = useState(false);
-
-  //console.log("KEYS:", Object.keys(pass));
-  //console.log("CHECKED IN:", pass.checked_in_at);
-  //console.log("CREATED:", pass.created_at);
-
-  //console.log(formatDateTime(pass.checked_in_at));
 
   const handleCheckIn = async () => {
     if (!pass) return;
@@ -136,7 +127,6 @@ function GuardVerifyScreen() {
     );
   } else if (status === "checked_in") {
     const date = pass.checked_in_at ?? pass.created_at;
-    console.log("date for check-in", date);
 
     banner = {
       type: "warning",

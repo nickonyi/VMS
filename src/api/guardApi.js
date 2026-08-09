@@ -14,3 +14,20 @@ export const getVisitHistory = async () => {
 
   return data;
 };
+
+export const getPassByCode = async (code) => {
+  const res = await fetch(`${API_URL}/verify?t=${encodeURIComponent(code)}`, {
+    credentials: "include",
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw {
+      status: res.status,
+      ...data,
+    };
+  }
+
+  return data;
+};
