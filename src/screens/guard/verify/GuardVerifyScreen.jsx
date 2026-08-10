@@ -99,6 +99,8 @@ function GuardVerifyScreen() {
     );
   }
 
+  console.log(pass);
+
   const status = effectiveStatus(pass);
 
   const residentName = pass.resident_name
