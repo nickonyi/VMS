@@ -14,3 +14,20 @@ export const getVisitorPasses = async () => {
 
   return data;
 };
+
+export const getDashboardStats = async () => {
+  const res = await fetch(`${API_URL}/dashboard/stats`, {
+    method: "GET",
+    credentials: "include",
+  });
+
+  const data = await res.json();
+
+  console.log(data);
+
+  if (!res.ok) {
+    throw new Error(data.message || "Failed to fetch dashboard statistics.");
+  }
+
+  return data;
+};
