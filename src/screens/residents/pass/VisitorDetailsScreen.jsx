@@ -176,10 +176,17 @@ function VisitorDetailsScreen() {
           </CardHeader>
           <CardContent className="flex flex-col items-center">
             <QRCode value={qrValue} size={220} />
+            <div className="flex flex-col mt-4">
+              <h1 className="text-slate-500 text-center max-w-xs">Pass code</h1>
+              <p className="text-4xl font-bold  text-center max-w-xs">
+                {pass.manual_code}
+              </p>
+            </div>
             <p className="mt-4 text-sm text-slate-500 text-center max-w-xs">
               Share this QR code with your guest. The guard will scan it at the
               gate.
             </p>
+
             <div className="mt-5 grid grid-cols-3 gap-2 w-full">
               <Button
                 variant="outline"
