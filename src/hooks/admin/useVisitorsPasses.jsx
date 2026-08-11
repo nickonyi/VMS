@@ -2,18 +2,17 @@ import { useCallback, useEffect, useState } from "react";
 import * as adminApi from "../../api/adminApi";
 
 export function useVisitorPasses() {
-  const [passes, setPasses] = useState([]);
+  const [visits, setVisits] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const loadPasses = useCallback(async () => {
+  const loadVisits = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
 
       const data = await adminApi.getVisitorPasses();
-
-      setPasses(data.visits);
+      setVisits(data.visits);
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "Failed to load visitor passes.",
@@ -24,13 +23,15 @@ export function useVisitorPasses() {
   }, []);
 
   useEffect(() => {
-    loadPasses();
-  }, [loadPasses]);
+    loadVisits();
+  }, [loadVisits]);
 
   return {
-    passes,
+    visits,
     loading,
     error,
-    reload: loadPasses,
+    reload: loadVisits,
   };
 }
+
+export const adminUpdatePass = () => {};

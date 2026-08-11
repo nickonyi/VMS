@@ -21,8 +21,6 @@ function ResidentDashboard() {
   const navigate = useNavigate();
   const { passes, loading } = useResidentPasses();
 
-  console.log(passes);
-
   const { upcoming, active, past } = useMemo(() => {
     return passes.reduce(
       (groups, pass) => {
@@ -45,8 +43,6 @@ function ResidentDashboard() {
       },
     );
   }, [passes]);
-
-  console.log(active);
 
   const stats = [
     {

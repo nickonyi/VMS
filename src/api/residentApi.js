@@ -11,6 +11,7 @@ export const createPass = async (payload) => {
   });
 
   const data = await res.json();
+  console.log(data);
 
   if (!res.ok) {
     let message = "Failed to create visitor pass.";
