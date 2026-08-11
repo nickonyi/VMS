@@ -1,9 +1,9 @@
 import { formatTime } from "../lib/utils";
 
-function PeakHours({ visits, now }) {
+function PeakHours({ passes, now }) {
   const today = now.toISOString().split("T")[0];
   const hourCounts = new Array(24).fill(0);
-  visits.forEach((v) => {
+  passes.forEach((v) => {
     if (v.visit_date === today && v.checked_in_at) {
       const h = new Date(v.checked_in_at).getHours();
       hourCounts[h]++;

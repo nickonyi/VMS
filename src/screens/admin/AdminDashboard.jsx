@@ -27,7 +27,7 @@ import PeakHours from "../../components/PeakHours";
 function AdminDashboard() {
   const navigate = useNavigate();
   const { stats, loading } = useDashboardStats();
-  const { visits } = useVisitorPasses();
+  const { passes } = useVisitorPasses();
   const { currentUser } = useAuth();
   const [now, setNow] = useState(new Date());
 
@@ -40,8 +40,8 @@ function AdminDashboard() {
   }, []);
 
   const recent = useMemo(
-    () => visits.slice(0, 6).map((p) => ({ ...p, eff: effectiveStatus(p) })),
-    [visits],
+    () => passes.slice(0, 6).map((p) => ({ ...p, eff: effectiveStatus(p) })),
+    [passes],
   );
 
   if (loading) {
@@ -51,8 +51,6 @@ function AdminDashboard() {
       </div>
     );
   }
-
-  console.log(stats);
 
   const cards = [
     {
@@ -169,7 +167,7 @@ function AdminDashboard() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <PeakHours visits={visits} now={now} />
+            <PeakHours passes={passes} now={now} />
           </CardContent>
         </Card>
       </div>

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import * as adminApi from "../../api/adminApi";
 
 export function useVisitorPasses() {
-  const [visits, setVisits] = useState([]);
+  const [passes, setPasses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -12,7 +12,7 @@ export function useVisitorPasses() {
       setError(null);
 
       const data = await adminApi.getVisitorPasses();
-      setVisits(data.visits);
+      setPasses(data.visits);
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "Failed to load visitor passes.",
@@ -27,7 +27,7 @@ export function useVisitorPasses() {
   }, [loadVisits]);
 
   return {
-    visits,
+    passes,
     loading,
     error,
     reload: loadVisits,

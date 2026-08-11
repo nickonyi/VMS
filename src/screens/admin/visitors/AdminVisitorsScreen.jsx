@@ -26,22 +26,31 @@ function AdminVisitorsScreen() {
   const { toast } = useToast();
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("all");
-  const { visits, loading, reload } = useVisitorPasses();
+  const { passes, loading, reload } = useVisitorPasses();
   const [revokeTarget, setRevokeTarget] = useState(null);
   const [revoking, setRevoking] = useState(false);
 
-  const visitsWithStatus = useMemo(
-    () => visits.map((v) => ({ ...v, eff: effectiveStatus(v) })),
-    [visits],
+  const passesWithStatus = useMemo(
+    () => passes.map((p) => ({ ...p, eff: effectiveStatus(p) })),
+    [passes],
   );
 
   const filtered = useMemo(() => {
-    if (filter === "all") {
-      return visitsWithStatus;
-    }
+    const normalizedSearch = search.trim().toLowerCase();
+    return passesWithStatus.filter((p) => {
+      const matchesStatus = filter === "all" || p.eff === filter;
 
-    return visitsWithStatus.filter((v) => v.eff === filter);
-  }, [visitsWithStatus, filter]);
+      const guestName = p.guest_name?.toLowerCase() ?? null;
+      const unitNumber = String(p.unit_number ?? "").toLowerCase();
+
+      const matchesSearch =
+        !normalizedSearch ||
+        guestName.includes(normalizedSearch) ||
+        unitNumber.includes(normalizedSearch);
+
+      return matchesStatus && matchesSearch;
+    });
+  }, [passesWithStatus, search, filter]);
 
   const handleRevoke = async () => {};
   return (
