@@ -6,6 +6,7 @@ export const signin = (email, password) => {
     body: JSON.stringify({
       email,
       password,
+      role,
     }),
   });
 };

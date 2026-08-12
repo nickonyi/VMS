@@ -29,3 +29,17 @@ export const getDashboardStats = async () => {
 
   return data;
 };
+
+export const getUsers = async () => {
+  const response = await fetch(`${API_URL}/users`, {
+    credentials: "include",
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to load users.");
+  }
+
+  return data;
+};
