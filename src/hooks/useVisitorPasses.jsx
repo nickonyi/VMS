@@ -24,8 +24,6 @@ export function useResidentPasses() {
     load();
   }, [load]);
 
-  console.log(passes);
-
   return { passes, loading, error, reload: load };
 }
 

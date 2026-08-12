@@ -61,6 +61,9 @@ function CreateVisitorPage() {
         expiresAt: combineDateAndTime(form.visit_date, form.expiry_time),
       };
 
+      console.log(payload.expectedArrivalAt);
+      console.log(payload.expiresAt);
+
       const pass = await createPass(payload);
 
       toast("Visitor pass created successfully.", "success");
