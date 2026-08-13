@@ -62,3 +62,22 @@ export const updateProfile = async (profileId, updates) => {
 
   return data;
 };
+
+export const createUser = async (data) => {
+  const response = await fetch(`${API_URL}/users`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  const responseData = await response.json();
+
+  if (!response.ok) {
+    throw new Error(responseData.message || "Failed to create user.");
+  }
+
+  return responseData;
+};

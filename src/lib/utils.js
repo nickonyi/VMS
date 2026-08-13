@@ -33,6 +33,7 @@ export const VISIT_PURPOSES = [
 
 export const ROLE_HOME = {
   resident: "/resident",
+  contractor: "/resident",
   guard: "/guard",
   admin: "/admin",
 };

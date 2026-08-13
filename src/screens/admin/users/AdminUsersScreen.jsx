@@ -3,6 +3,7 @@ import {
   Search,
   UserPlus,
   ShieldCheck,
+  Wrench,
   Home,
   User as UserIcon,
   Power,
@@ -20,6 +21,7 @@ import { Spinner } from "@/components/ui/Spinner";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { formatDate } from "@/lib/utils";
 import { EditUserModal } from "../../../components/ui/Modal";
+import { CreateUserModal } from "../../../components/ui/Modal";
 
 const roleConfig = {
   resident: {
@@ -31,6 +33,11 @@ const roleConfig = {
     label: "Guard",
     icon: <ShieldCheck className="h-3.5 w-3.5" />,
     color: "bg-teal-100 text-teal-700",
+  },
+  contractor: {
+    label: "Contractor",
+    icon: <Wrench className="h-3.5 w-3.5" />,
+    color: "bg-amber-100 text-amber-700",
   },
   admin: {
     label: "Admin",
@@ -50,7 +57,7 @@ function AdminUsersScreen() {
 
   const filtered = useMemo(() => {
     return profiles.filter((p) => {
-      if (!roleFilter === "all" && p.role !== roleFilter) return false;
+      if (roleFilter !== "all" && p.role !== roleFilter) return false;
 
       if (
         search &&
@@ -63,8 +70,6 @@ function AdminUsersScreen() {
       return true;
     });
   }, [profiles, search, roleFilter]);
-
-  console.log(filtered);
 
   return (
     <div className="space-y-6">
@@ -91,7 +96,7 @@ function AdminUsersScreen() {
           />
         </div>
         <div className="flex gap-2">
-          {["all", "resident", "guard", "admin"].map((r) => (
+          {["all", "resident", "guard", "contractor", "admin"].map((r) => (
             <button
               key={r}
               onClick={() => setRoleFilter(r)}
@@ -175,6 +180,16 @@ function AdminUsersScreen() {
           onClose={() => setEditing(null)}
           onSaved={() => {
             setEditing(null);
+            reload();
+          }}
+          onToast={toast}
+        />
+      )}
+      {creating && (
+        <CreateUserModal
+          onClose={() => setCreating(false)}
+          onSaved={() => {
+            setCreating(false);
             reload();
           }}
           onToast={toast}

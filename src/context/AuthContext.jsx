@@ -47,9 +47,9 @@ export function AuthProvider({ children }) {
     setReady(true);
   }, []);
 
-  const signin = useCallback(async (email, password, role) => {
+  const signin = useCallback(async (email, password) => {
     try {
-      const data = await authApi.signin(email, password, role);
+      const data = await authApi.signin(email, password);
       setCurrentUser(data.user);
 
       localStorage.setItem(SESSION_KEY, JSON.stringify(data.user));

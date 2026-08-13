@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { X, Power } from "lucide-react";
+import { X, Power, UserPlus } from "lucide-react";
 import { cn } from "../../lib/utils";
-import { updateProfile } from "../../hooks/useProfiles";
+import { updateProfile, createProfileViaSignup } from "../../hooks/useProfiles";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
@@ -112,6 +112,7 @@ export function EditUserModal({ user, onClose, onSaved, onToast }) {
         >
           <option value="resident">Resident</option>
           <option value="guard">Security Guard</option>
+          <option value="contractor">Contractor</option>
           <option value="admin">Administrator</option>
         </Select>
         <Input
@@ -144,6 +145,111 @@ export function EditUserModal({ user, onClose, onSaved, onToast }) {
           </Button>
           <Button loading={saving} onClick={handleSave}>
             Save Changes
+          </Button>
+        </div>
+      </div>
+    </Modal>
+  );
+}
+
+export function CreateUserModal({ onClose, onSaved, onToast }) {
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("resident");
+  const [unit, setUnit] = useState("");
+  const [phone, setPhone] = useState("");
+  const [saving, setSaving] = useState(false);
+
+  async function handleCreate() {
+    if (!fullName.trim() || !email.trim() || !password.trim()) {
+      onToast("Name, email, and password are required.", "error");
+      return;
+    }
+    if (password.length < 6) {
+      onToast("Password must be at least 6 characters.", "error");
+      return;
+    }
+    setSaving(true);
+    try {
+      await createProfileViaSignup({
+        email: email.trim(),
+        password,
+        fullName: fullName.trim(),
+        role,
+        unit: unit.trim() || undefined,
+        phone: phone.trim() || undefined,
+      });
+      onToast("User created successfully.", "success");
+      onSaved();
+    } catch (err) {
+      onToast(
+        err instanceof Error ? err.message : "Failed to create user.",
+        "error",
+      );
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  return (
+    <Modal
+      open
+      onClose={onClose}
+      title="Add New User"
+      description="Create a new resident, guard, or admin account."
+    >
+      <div className="space-y-4">
+        <Input
+          label="Full name"
+          value={fullName}
+          onChange={(e) => setFullName(e.target.value)}
+          placeholder="Jane Doe"
+        />
+        <Input
+          label="Email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="jane@example.com"
+        />
+        <Input
+          label="Password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="At least 6 characters"
+        />
+        <Select
+          label="Role"
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
+        >
+          <option value="resident">Resident</option>
+          <option value="guard">Security Guard</option>
+          <option value="contractor">Contractor</option>
+          <option value="admin">Administrator</option>
+        </Select>
+        {role === "resident" && (
+          <Input
+            label="Unit"
+            value={unit}
+            onChange={(e) => setUnit(e.target.value)}
+            placeholder="e.g. A-204"
+          />
+        )}
+        <Input
+          label="Phone (optional)"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          placeholder="+1 555 000 1234"
+        />
+        <div className="flex justify-end gap-3 pt-2">
+          <Button variant="outline" onClick={onClose}>
+            Cancel
+          </Button>
+          <Button loading={saving} onClick={handleCreate}>
+            <UserPlus className="h-4 w-4" /> Create User
           </Button>
         </div>
       </div>

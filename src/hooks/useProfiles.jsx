@@ -38,3 +38,7 @@ export function useProfiles() {
 export const updateProfile = async (id, updates) => {
   return await adminApi.updateProfile(id, updates);
 };
+
+export const createProfileViaSignup = async (data) => {
+  return await adminApi.createUser(data);
+};
