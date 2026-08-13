@@ -19,6 +19,7 @@ import { Modal } from "@/components/ui/Modal";
 import { Spinner } from "@/components/ui/Spinner";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { formatDate } from "@/lib/utils";
+import { EditUserModal } from "../../../components/ui/Modal";
 
 const roleConfig = {
   resident: {
@@ -62,6 +63,8 @@ function AdminUsersScreen() {
       return true;
     });
   }, [profiles, search, roleFilter]);
+
+  console.log(filtered);
 
   return (
     <div className="space-y-6">
@@ -148,7 +151,7 @@ function AdminUsersScreen() {
                         className={`inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-medium ${p.active ? "bg-emerald-100 text-emerald-700" : "bg-zinc-200 text-zinc-600"}`}
                       >
                         <span className="h-1.5 w-1.5 rounded-full bg-current opacity-70" />
-                        {p.active ? "Active" : "Disabled"}
+                        {p.status === "active" ? "Active" : "Disabled"}
                       </span>
                       <Button
                         variant="ghost"
@@ -165,6 +168,18 @@ function AdminUsersScreen() {
           )}
         </CardContent>
       </Card>
+
+      {editing && (
+        <EditUserModal
+          user={editing}
+          onClose={() => setEditing(null)}
+          onSaved={() => {
+            setEditing(null);
+            reload();
+          }}
+          onToast={toast}
+        />
+      )}
     </div>
   );
 }

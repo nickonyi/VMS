@@ -1,6 +1,10 @@
-import { useEffect } from "react";
-import { X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { X, Power } from "lucide-react";
 import { cn } from "../../lib/utils";
+import { updateProfile } from "../../hooks/useProfiles";
+import { Input } from "@/components/ui/Input";
+import { Select } from "@/components/ui/Input";
+import { Button } from "@/components/ui/Button";
 
 export function Modal({
   open,
@@ -55,5 +59,94 @@ export function Modal({
         <div className="p-5 sm:p-6">{children}</div>
       </div>
     </div>
+  );
+}
+
+export function EditUserModal({ user, onClose, onSaved, onToast }) {
+  const [fullName, setFullName] = useState(user.full_name);
+  const [role, setRole] = useState(user.role);
+  const [unit, setUnit] = useState(user.unit ?? "");
+  const [phone, setPhone] = useState(user.phone ?? "");
+  const [active, setActive] = useState(user.status === "active");
+  const [saving, setSaving] = useState(false);
+
+  async function handleSave() {
+    setSaving(true);
+    try {
+      await updateProfile(user.id, {
+        fullName: fullName.trim(),
+        role,
+        unit: unit.trim() || null,
+        phone: phone.trim() || null,
+        active,
+      });
+      onToast("User updated successfully.", "success");
+      onSaved();
+    } catch (err) {
+      onToast(
+        err instanceof Error ? err.message : "Failed to update user.",
+        "error",
+      );
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  return (
+    <Modal
+      open
+      onClose={onClose}
+      title="Edit User"
+      description={`${user.full_name}`}
+    >
+      <div className="space-y-4">
+        <Input
+          label="Full name"
+          value={fullName}
+          onChange={(e) => setFullName(e.target.value)}
+        />
+        <Select
+          label="Role"
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
+        >
+          <option value="resident">Resident</option>
+          <option value="guard">Security Guard</option>
+          <option value="admin">Administrator</option>
+        </Select>
+        <Input
+          label="Unit"
+          disabled={true}
+          value={unit}
+          onChange={(e) => setUnit(e.target.value)}
+          placeholder="e.g. A-204"
+        />
+        <Input
+          label="Phone"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          placeholder="+1 555 000 1234"
+        />
+        <label className="flex items-center gap-3 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={active}
+            onChange={(e) => setActive(e.target.checked)}
+            className="h-4 w-4 rounded border-slate-300 text-slate-900 focus:ring-slate-900"
+          />
+          <span className="text-sm text-slate-700 flex items-center gap-1.5">
+            <Power className="h-4 w-4" /> Account active
+          </span>
+        </label>
+        <div className="flex justify-end gap-3 pt-2">
+          <Button variant="outline" onClick={onClose}>
+            Cancel
+          </Button>
+          <Button loading={saving} onClick={handleSave}>
+            Save Changes
+          </Button>
+        </div>
+      </div>
+    </Modal>
   );
 }

@@ -11,10 +11,9 @@ export function useProfiles() {
       setLoading(true);
       setError(null);
 
-      console.log(adminApi);
-
       const response = await adminApi.getUsers();
-      console.log(response);
+
+      console.log(response.users);
 
       setProfiles(response.users ?? []);
     } catch (err) {
@@ -35,3 +34,7 @@ export function useProfiles() {
     reload: load,
   };
 }
+
+export const updateProfile = async (id, updates) => {
+  return await adminApi.updateProfile(id, updates);
+};
