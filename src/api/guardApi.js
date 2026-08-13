@@ -36,7 +36,7 @@ export const getPassByCode = async (code) => {
 };
 
 export const checkInPass = async (passId) => {
-  const res = await fetch(`${API_URL}/${passId}/api/guard/check-in`, {
+  const res = await fetch(`${API_URL}/api/guard/${passId}/check-in`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -54,7 +54,7 @@ export const checkInPass = async (passId) => {
 };
 
 export const checkOutPass = async (passId) => {
-  const res = await fetch(`${API_URL}/${passId}/api/guard/check-out`, {
+  const res = await fetch(`${API_URL}/api/guard/${passId}/check-out`, {
     method: "POST",
     credentials: "include",
     headers: {
