@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000/api/admin";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const getVisitorPasses = async ({
   page = 1,
@@ -14,7 +14,7 @@ export const getVisitorPasses = async ({
   });
 
   const response = await fetch(
-    `${API_URL}/visitor-passes?${params.toString()}`,
+    `${API_URL}/api/admin/visitor-passes?${params.toString()}`,
     {
       credentials: "include",
     },
@@ -30,7 +30,7 @@ export const getVisitorPasses = async ({
 };
 
 export const getDashboardStats = async () => {
-  const res = await fetch(`${API_URL}/dashboard/stats`, {
+  const res = await fetch(`${API_URL}/api/admin/dashboard/stats`, {
     method: "GET",
     credentials: "include",
   });
@@ -45,7 +45,7 @@ export const getDashboardStats = async () => {
 };
 
 export const getUsers = async () => {
-  const response = await fetch(`${API_URL}/users`, {
+  const response = await fetch(`${API_URL}/api/admin/users`, {
     credentials: "include",
   });
 
@@ -59,7 +59,7 @@ export const getUsers = async () => {
 };
 
 export const updateProfile = async (profileId, updates) => {
-  const res = await fetch(`${API_URL}/${profileId}/`, {
+  const res = await fetch(`${API_URL}/api/admin/${profileId}/`, {
     method: "PATCH",
     credentials: "include",
     headers: {
@@ -78,7 +78,7 @@ export const updateProfile = async (profileId, updates) => {
 };
 
 export const createUser = async (data) => {
-  const response = await fetch(`${API_URL}/users`, {
+  const response = await fetch(`${API_URL}/api/admin/users`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -97,7 +97,7 @@ export const createUser = async (data) => {
 };
 
 export const updateVisitorPass = async (id, updates) => {
-  const response = await fetch(`${API_URL}/${id}`, {
+  const response = await fetch(`${API_URL}/api/admin/${id}`, {
     method: "PATCH",
     credentials: "include",
     headers: {

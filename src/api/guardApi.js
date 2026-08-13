@@ -1,7 +1,7 @@
-const API_URL = "http://localhost:3000/api/guard";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const getVisitHistory = async () => {
-  const res = await fetch(`${API_URL}/visit-logs`, {
+  const res = await fetch(`${API_URL}/api/guard/visit-logs`, {
     method: "GET",
     credentials: "include",
   });
@@ -16,9 +16,12 @@ export const getVisitHistory = async () => {
 };
 
 export const getPassByCode = async (code) => {
-  const res = await fetch(`${API_URL}/verify?t=${encodeURIComponent(code)}`, {
-    credentials: "include",
-  });
+  const res = await fetch(
+    `${API_URL}/api/guard/verify?t=${encodeURIComponent(code)}`,
+    {
+      credentials: "include",
+    },
+  );
 
   const data = await res.json();
 
@@ -33,7 +36,7 @@ export const getPassByCode = async (code) => {
 };
 
 export const checkInPass = async (passId) => {
-  const res = await fetch(`${API_URL}/${passId}/check-in`, {
+  const res = await fetch(`${API_URL}/${passId}/api/guard/check-in`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -51,7 +54,7 @@ export const checkInPass = async (passId) => {
 };
 
 export const checkOutPass = async (passId) => {
-  const res = await fetch(`${API_URL}/${passId}/check-out`, {
+  const res = await fetch(`${API_URL}/${passId}/api/guard/check-out`, {
     method: "POST",
     credentials: "include",
     headers: {

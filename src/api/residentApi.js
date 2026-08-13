@@ -1,7 +1,7 @@
-const API_URL = "http://localhost:3000/api/resident";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const createPass = async (payload) => {
-  const res = await fetch(API_URL, {
+  const res = await fetch(`${API_URL}/api/resident`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -11,7 +11,6 @@ export const createPass = async (payload) => {
   });
 
   const data = await res.json();
-  console.log(data);
 
   if (!res.ok) {
     let message = "Failed to create visitor pass.";
@@ -29,7 +28,7 @@ export const createPass = async (payload) => {
 };
 
 export const getVisitorPass = async (passId) => {
-  const res = await fetch(`${API_URL}/${passId}`, {
+  const res = await fetch(`${API_URL}/api/resident/${passId}`, {
     credentials: "include",
   });
 
@@ -46,7 +45,7 @@ export const getVisitorPass = async (passId) => {
 };
 
 export const getMyVisitorPasses = async () => {
-  const res = await fetch(`${API_URL}/my-passes`, {
+  const res = await fetch(`${API_URL}/api/resident/my-passes`, {
     credentials: "include",
   });
 
@@ -63,7 +62,7 @@ export const getMyVisitorPasses = async () => {
 };
 
 export const cancelPass = async (passId) => {
-  const res = await fetch(`${API_URL}/${passId}/cancel`, {
+  const res = await fetch(`${API_URL}/api/resident/${passId}/cancel`, {
     method: "PATCH",
     credentials: "include",
   });
