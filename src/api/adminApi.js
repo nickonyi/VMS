@@ -1,15 +1,29 @@
 const API_URL = "http://localhost:3000/api/admin";
 
-export const getVisitorPasses = async () => {
-  const res = await fetch(`${API_URL}/visitor-passes`, {
-    method: "GET",
-    credentials: "include",
+export const getVisitorPasses = async ({
+  page = 1,
+  limit = 10,
+  status = "all",
+  search = "",
+} = {}) => {
+  const params = new URLSearchParams({
+    page: String(page),
+    limit: String(limit),
+    status,
+    search,
   });
 
-  const data = await res.json();
+  const response = await fetch(
+    `${API_URL}/visitor-passes?${params.toString()}`,
+    {
+      credentials: "include",
+    },
+  );
 
-  if (!res.ok) {
-    throw new Error(data.message || "Failed to fetch visit history.");
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to load visitor passes.");
   }
 
   return data;
@@ -80,4 +94,23 @@ export const createUser = async (data) => {
   }
 
   return responseData;
+};
+
+export const updateVisitorPass = async (id, updates) => {
+  const response = await fetch(`${API_URL}/${id}`, {
+    method: "PATCH",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(updates),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to update visitor pass.");
+  }
+
+  return data;
 };
