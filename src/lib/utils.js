@@ -68,7 +68,6 @@ export function formatDateTime(value) {
   if (!value) return "—";
 
   return new Date(value).toLocaleString("en-US", {
-    timeZone: APP_TIMEZONE,
     month: "short",
     day: "numeric",
     hour: "numeric",

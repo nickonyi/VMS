@@ -71,12 +71,6 @@ function VisitorDetailsScreen() {
     };
   }, [passId, toast]);
 
-  if (pass) {
-    console.log(pass.created_at);
-
-    console.log(formatTime("2026-08-17T18:29:00.217Z"));
-  }
-
   const handleCancel = async () => {
     if (!pass) return;
 
@@ -104,6 +98,8 @@ function VisitorDetailsScreen() {
       </div>
     );
   }
+
+  console.log(pass);
 
   if (!pass) {
     return (
