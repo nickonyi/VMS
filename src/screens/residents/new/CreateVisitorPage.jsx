@@ -25,8 +25,6 @@ function CreateVisitorPage() {
 
   const today = new Date().toISOString().split("T")[0];
 
-  console.log(currentUser);
-
   const [form, setForm] = useState({
     guest_name: "",
     guest_phone: "",

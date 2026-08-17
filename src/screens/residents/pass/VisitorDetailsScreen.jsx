@@ -31,7 +31,7 @@ import {
   CardTitle,
   CardContent,
 } from "../../../components/ui/Card";
-import { formatDate, formatTime } from "../../../lib/utils";
+import { formatDate, formatDateTime, formatTime } from "../../../lib/utils";
 import DetailRow from "../../../components/ui/DetailRow";
 
 function VisitorDetailsScreen() {
@@ -70,6 +70,12 @@ function VisitorDetailsScreen() {
       active = false;
     };
   }, [passId, toast]);
+
+  if (pass) {
+    console.log(pass.created_at);
+
+    console.log(formatTime("2026-08-17T18:29:00.217Z"));
+  }
 
   const handleCancel = async () => {
     if (!pass) return;
