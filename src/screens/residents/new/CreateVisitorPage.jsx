@@ -24,6 +24,9 @@ function CreateVisitorPage() {
   const [error, setError] = useState(null);
 
   const today = new Date().toISOString().split("T")[0];
+
+  console.log(currentUser);
+
   const [form, setForm] = useState({
     guest_name: "",
     guest_phone: "",
@@ -60,9 +63,6 @@ function CreateVisitorPage() {
         ),
         expiresAt: combineDateAndTime(form.visit_date, form.expiry_time),
       };
-
-      console.log(payload.expectedArrivalAt);
-      console.log(payload.expiresAt);
 
       const pass = await createPass(payload);
 
@@ -133,14 +133,15 @@ function CreateVisitorPage() {
               onChange={(e) => update("guest_email", e.target.value)}
               required
             />
-            <Input
-              label="Apartment / Unit"
-              name="unit"
-              placeholder="e.g. A-204"
-              value={form.unit}
-              onChange={(e) => update("unit", e.target.value)}
-              required
-            />
+            <div>
+              <p className="text-sm font-medium text-slate-700">
+                Apartment / Unit
+              </p>
+
+              <div className="mt-1 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700">
+                Unit {currentUser?.unit}
+              </div>
+            </div>
           </CardContent>
         </Card>
 
