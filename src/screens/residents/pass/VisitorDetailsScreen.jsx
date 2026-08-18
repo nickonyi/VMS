@@ -31,7 +31,7 @@ import {
   CardTitle,
   CardContent,
 } from "../../../components/ui/Card";
-import { formatDate, formatTime } from "../../../lib/utils";
+import { formatDate, formatDateTime, formatTime } from "../../../lib/utils";
 import DetailRow from "../../../components/ui/DetailRow";
 
 function VisitorDetailsScreen() {
@@ -98,6 +98,8 @@ function VisitorDetailsScreen() {
       </div>
     );
   }
+
+  console.log(pass);
 
   if (!pass) {
     return (

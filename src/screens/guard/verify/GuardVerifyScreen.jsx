@@ -41,6 +41,7 @@ function GuardVerifyScreen() {
   const navigate = useNavigate();
   const { pass, loading, error, reload } = usePassByManualCode(code);
   const [processing, setProcessing] = useState(false);
+  const [justCheckedIn, setJustCheckedIn] = useState(false);
 
   const handleCheckIn = async () => {
     if (!pass) return;
@@ -49,6 +50,7 @@ function GuardVerifyScreen() {
 
     try {
       const res = await checkInPass(pass.id);
+      setJustCheckedIn(true);
 
       toast(`${pass.guest_name} checked in successfully.`, "success");
 
@@ -128,11 +130,20 @@ function GuardVerifyScreen() {
   } else if (status === "checked_in") {
     const date = pass.checked_in_at ?? pass.created_at;
 
-    banner = {
-      type: "warning",
-      title: "Already Checked In",
-      message: `This visitor was checked in at ${formatDateTime(date)}.`,
-    };
+    if (justCheckedIn) {
+      banner = {
+        type: "success",
+        title: "Check-In Successful",
+        message: `${pass.guest_name} was successfully checked in at ${formatDateTime(date)}.`,
+      };
+    } else {
+      banner = {
+        type: "warning",
+        title: "Already Checked In",
+        message: `This visitor was checked in at ${formatDateTime(date)}.`,
+      };
+    }
+
     action = (
       <Button
         size="lg"
