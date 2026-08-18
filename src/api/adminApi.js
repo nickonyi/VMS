@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_DEV_API_URL;
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const getVisitorPasses = async ({
   page = 1,

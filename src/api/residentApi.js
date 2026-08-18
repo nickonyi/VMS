@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_DEV_API_URL;
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const createPass = async (payload) => {
   const res = await fetch(`${API_URL}/api/resident`, {
