@@ -241,31 +241,6 @@ function LoginPage() {
               <ArrowLeft className="h-4 w-4" /> Back to sign in
             </button>
           )}
-
-          <div className="mt-8 pt-6 border-t border-slate-200">
-            <p className="text-xs font-medium text-slate-500 uppercase tracking-wider mb-3">
-              Quick demo access
-            </p>
-            <div className="grid grid-cols-3 gap-2">
-              {roleOptions.map((r) => (
-                <button
-                  key={r.value}
-                  onClick={() =>
-                    fillDemo({
-                      email: `${r.value}@demo.com`,
-                      password: "password",
-                    })
-                  }
-                  className="rounded-lg border border-slate-200 px-2 py-2 text-xs font-medium text-slate-600 hover:bg-slate-50 hover:border-slate-300 transition-colors"
-                >
-                  {r.label}
-                </button>
-              ))}
-            </div>
-            <p className="mt-2 text-[11px] text-slate-400 text-center">
-              Demo accounts need to be created once via sign-up.
-            </p>
-          </div>
         </div>
       </div>
     </div>
