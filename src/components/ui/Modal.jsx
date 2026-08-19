@@ -66,6 +66,7 @@ export function EditUserModal({ user, onClose, onSaved, onToast }) {
   const [fullName, setFullName] = useState(user.full_name);
   const [role, setRole] = useState(user.role);
   const [unit, setUnit] = useState(user.unit ?? "");
+  const [email, setEmail] = useState(user.email ?? "");
   const [phone, setPhone] = useState(user.phone ?? "");
   const [active, setActive] = useState(user.status === "active");
   const [saving, setSaving] = useState(false);
@@ -76,6 +77,7 @@ export function EditUserModal({ user, onClose, onSaved, onToast }) {
       await updateProfile(user.id, {
         fullName: fullName.trim(),
         role,
+        email,
         unit: unit.trim() || null,
         phone: phone.trim() || null,
         active,
@@ -121,6 +123,12 @@ export function EditUserModal({ user, onClose, onSaved, onToast }) {
           value={unit}
           onChange={(e) => setUnit(e.target.value)}
           placeholder="e.g. A-204"
+        />
+        <Input
+          label="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="example@mail.com"
         />
         <Input
           label="Phone"

@@ -64,7 +64,7 @@ function GuardHistoryPage() {
                         {p.guest_name}
                       </p>
                       <p className="text-sm text-slate-500 truncate">
-                        Unit {p.unit} · {formatDate(p.visit_date)} ·{" "}
+                        Unit {p.unit_number} · {formatDate(p.visit_date)} ·{" "}
                         {formatTime(p.visit_date)}
                       </p>
                       {p.checked_in_at && (
