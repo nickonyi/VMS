@@ -230,36 +230,6 @@ function LoginPage() {
             </Button>
           </form>
 
-          <div className="mt-6 text-center text-sm text-slate-500">
-            {mode === "signin" ? (
-              <>
-                Don't have an account?{" "}
-                <button
-                  onClick={() => {
-                    setMode("signup");
-                    setError(null);
-                  }}
-                  className="font-semibold text-slate-900 hover:underline"
-                >
-                  Sign up
-                </button>
-              </>
-            ) : (
-              <>
-                Already have an account?{" "}
-                <button
-                  onClick={() => {
-                    setMode("signin");
-                    setError(null);
-                  }}
-                  className="font-semibold text-slate-900 hover:underline"
-                >
-                  Sign in
-                </button>
-              </>
-            )}
-          </div>
-
           {mode === "signup" && (
             <button
               onClick={() => {

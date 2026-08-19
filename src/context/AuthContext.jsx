@@ -12,7 +12,6 @@ const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
   const [ready, setReady] = useState(false);
-  const [passes, setPasses] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
 
   const SESSION_KEY = "vms:user";
@@ -22,34 +21,38 @@ export function AuthProvider({ children }) {
       try {
         const data = await authApi.getCurrentUser();
 
-        setCurrentUser(data.user);
-      } catch {
-        setCurrentUser(null);
-      }
+        if (data.user.status !== "active") {
+          await authApi.signout();
+          localStorage.removeItem(SESSION_KEY);
+          setCurrentUser(null);
+          return;
+        }
 
-      setReady(true);
+        setCurrentUser(data.user);
+        localStorage.setItem(SESSION_KEY, JSON.stringify(data.user));
+      } catch {
+        localStorage.removeItem(SESSION_KEY);
+        setCurrentUser(null);
+      } finally {
+        setReady(true);
+      }
     };
 
     init();
   }, []);
 
-  useEffect(() => {
-    try {
-      const storedUser = localStorage.getItem(SESSION_KEY);
-
-      if (storedUser) {
-        setCurrentUser(JSON.parse(storedUser));
-      }
-    } catch (err) {
-      console.log(err);
-    }
-
-    setReady(true);
-  }, []);
-
   const signin = useCallback(async (email, password) => {
     try {
       const data = await authApi.signin(email, password);
+
+      if (data.user.status !== "active") {
+        return {
+          success: false,
+          error: "Your account is not active.",
+          status: data.user.status,
+        };
+      }
+
       setCurrentUser(data.user);
 
       localStorage.setItem(SESSION_KEY, JSON.stringify(data.user));
