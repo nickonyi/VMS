@@ -186,47 +186,6 @@ function VisitorDetailsScreen() {
               Share this QR code with your guest. The guard will scan it at the
               gate.
             </p>
-
-            <div className="mt-5 grid grid-cols-3 gap-2 w-full">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={shareWhatsApp}
-                className="flex-col h-auto py-2.5"
-              >
-                <MessageCircle className="h-4 w-4" />{" "}
-                <span className="text-xs">WhatsApp</span>
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={shareSMS}
-                className="flex-col h-auto py-2.5"
-              >
-                <MessageCircle className="h-4 w-4" />{" "}
-                <span className="text-xs">SMS</span>
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  downloadQR(qrValue);
-                  toast("QR code downloaded.", "success");
-                }}
-                className="flex-col h-auto py-2.5"
-              >
-                <Download className="h-4 w-4" />{" "}
-                <span className="text-xs">Download</span>
-              </Button>
-            </div>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={shareNative}
-              className="mt-2 w-full"
-            >
-              <Share2 className="h-4 w-4" /> Share link
-            </Button>
           </CardContent>
         </Card>
 
