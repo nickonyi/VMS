@@ -3,7 +3,6 @@ import {
   Search,
   UserPlus,
   ShieldCheck,
-  Wrench,
   Home,
   User as UserIcon,
   Power,
@@ -34,11 +33,7 @@ const roleConfig = {
     icon: <ShieldCheck className="h-3.5 w-3.5" />,
     color: "bg-teal-100 text-teal-700",
   },
-  contractor: {
-    label: "Contractor",
-    icon: <Wrench className="h-3.5 w-3.5" />,
-    color: "bg-amber-100 text-amber-700",
-  },
+
   admin: {
     label: "Admin",
     icon: <UserIcon className="h-3.5 w-3.5" />,
@@ -96,7 +91,7 @@ function AdminUsersScreen() {
           />
         </div>
         <div className="flex gap-2">
-          {["all", "resident", "guard", "contractor", "admin"].map((r) => (
+          {["all", "resident", "guard", "admin"].map((r) => (
             <button
               key={r}
               onClick={() => setRoleFilter(r)}

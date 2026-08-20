@@ -17,28 +17,18 @@ export function AuthProvider({ children }) {
   const SESSION_KEY = "vms:user";
 
   useEffect(() => {
-    const init = async () => {
+    const storedUser = localStorage.getItem(SESSION_KEY);
+
+    if (storedUser) {
       try {
-        const data = await authApi.getCurrentUser();
-
-        if (data.user.status !== "active") {
-          await authApi.signout();
-          localStorage.removeItem(SESSION_KEY);
-          setCurrentUser(null);
-          return;
-        }
-
-        setCurrentUser(data.user);
-        localStorage.setItem(SESSION_KEY, JSON.stringify(data.user));
-      } catch {
+        setCurrentUser(JSON.parse(storedUser));
+      } catch (err) {
         localStorage.removeItem(SESSION_KEY);
         setCurrentUser(null);
-      } finally {
-        setReady(true);
       }
-    };
+    }
 
-    init();
+    setReady(true);
   }, []);
 
   const signin = useCallback(async (email, password) => {

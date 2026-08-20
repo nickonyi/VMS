@@ -99,8 +99,6 @@ function VisitorDetailsScreen() {
     );
   }
 
-  console.log(pass);
-
   if (!pass) {
     return (
       <div className="text-center py-20">
