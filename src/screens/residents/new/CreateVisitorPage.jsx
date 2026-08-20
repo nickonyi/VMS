@@ -29,6 +29,7 @@ function CreateVisitorPage() {
     guest_name: "",
     guest_phone: "",
     guest_email: "",
+    guest_id: "",
     number_of_guests: "1",
     unit: currentUser?.unit ?? "",
     visit_date: today,
@@ -53,6 +54,7 @@ function CreateVisitorPage() {
         guestPhone: form.guest_phone,
         numberOfGuests: Number(form.number_of_guests),
         guestEmail: form.guest_email,
+        guestId: form.guest_id,
         vehicleReg: form.vehicle_reg,
         purpose: form.purpose,
         expectedArrivalAt: combineDateAndTime(
@@ -107,7 +109,7 @@ function CreateVisitorPage() {
                 label="Phone number (optional)"
                 name="guest_phone"
                 type="tel"
-                placeholder="+1 555 000 1234"
+                placeholder="+257 123 456 1234"
                 value={form.guest_phone}
                 onChange={(e) => update("guest_phone", e.target.value)}
               />
@@ -129,6 +131,15 @@ function CreateVisitorPage() {
               placeholder="visitor@example.com"
               value={form.guest_email}
               onChange={(e) => update("guest_email", e.target.value)}
+              required
+            />
+            <Input
+              label="ID"
+              name="guest_id"
+              type="text"
+              placeholder="12345678"
+              value={form.guest_id}
+              onChange={(e) => update("guest_id", e.target.value)}
               required
             />
             <div>

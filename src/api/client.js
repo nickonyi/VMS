@@ -1,7 +1,5 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
-console.log(API_URL);
-
 export const api = async (endpoint, options = {}) => {
   const res = await fetch(`${API_URL}/api${endpoint}`, {
     credentials: "include",

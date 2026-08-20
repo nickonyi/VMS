@@ -27,7 +27,7 @@ export const VISIT_PURPOSES = [
   { value: "family", label: "Family visit" },
   { value: "delivery", label: "Delivery" },
   { value: "maintenance", label: "Maintenance" },
-  { value: "business", label: "Business" },
+  { value: "contractor", label: "Contractor" },
   { value: "other", label: "Other" },
 ];
 
