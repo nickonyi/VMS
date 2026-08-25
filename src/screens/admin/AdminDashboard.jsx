@@ -44,6 +44,8 @@ function AdminDashboard() {
     [passes],
   );
 
+  console.log(recent);
+
   if (loading) {
     return (
       <div className="flex justify-center py-20">
@@ -147,7 +149,8 @@ function AdminDashboard() {
                         {p.guest_name}
                       </p>
                       <p className="text-sm text-slate-500 truncate">
-                        Unit {p.unit} · {p.resident?.full_name ?? "Unknown"} ·{" "}
+                        Unit {p.unit_number} ·{" "}
+                        {p.resident_name ? p.resident_name : "Unknown"} ·{" "}
                         {formatDate(p.visit_date)}{" "}
                         {formatTime(`${p.arrival_time}`)}
                       </p>
