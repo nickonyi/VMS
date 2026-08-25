@@ -136,7 +136,7 @@ function AdminUsersScreen() {
                         )}
                       </div>
                       <p className="text-sm text-slate-500 truncate">
-                        {p.unit ? `Unit ${p.unit} · ` : ""}
+                        {p.unit_number ? `Unit ${p.unit_number} · ` : ""}
                         {p.phone ?? "No phone"} · Joined{" "}
                         {formatDate(p.created_at)}
                       </p>
