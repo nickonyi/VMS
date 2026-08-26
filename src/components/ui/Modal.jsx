@@ -134,7 +134,7 @@ export function EditUserModal({ user, onClose, onSaved, onToast }) {
           label="Phone"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
-          placeholder="+1 555 000 1234"
+          placeholder="+254 555 000 1234"
         />
         <label className="flex items-center gap-3 cursor-pointer">
           <input
@@ -250,7 +250,7 @@ export function CreateUserModal({ onClose, onSaved, onToast }) {
           label="Phone (optional)"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
-          placeholder="+1 555 000 1234"
+          placeholder="+254 555 000 1234"
         />
         <div className="flex justify-end gap-3 pt-2">
           <Button variant="outline" onClick={onClose}>
