@@ -77,7 +77,9 @@ export function formatDateTime(value) {
 }
 
 export function combineDateAndTime(date, time) {
-  return `${date}T${time}:00`;
+  const localDate = new Date(`${date}T${time}:00`);
+
+  return localDate.toISOString();
 }
 
 export function initials(name) {
