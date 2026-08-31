@@ -111,13 +111,12 @@ function VisitorDetailsScreen() {
   }
 
   const status = effectiveStatus(pass);
+  const code = pass.manual_code;
   const qrValue = `${import.meta.env.VITE_APP_URL}/guard/verify?t=${pass.qr_token}`;
-  const shareText = `Hello ${pass.guest_name}, here is your visitor pass for ${pass.unit}. Show this QR code at the gate. Visit date: ${formatDate(pass.visit_date)}, arrival: ${formatTime(`2000-01-01T${pass.arrival_time}`)}.`;
+  const shareText = `Hello ${pass.guest_name}, here is your visitor pass for ${pass.unit_number}. Show this code:${code} at the gate. Visit date: ${formatDate(pass.visit_date)}, arrival: ${formatTime(`${pass.arrival_time}`)}.`;
 
   const shareWhatsApp = () => {
-    const url = `https://wa.me/?text=${encodeURIComponent(
-      `${shareText} ${qrValue}`,
-    )}`;
+    const url = `https://wa.me/?text=${encodeURIComponent(`${shareText}`)}`;
 
     window.open(url, "_blank");
   };
@@ -186,6 +185,18 @@ function VisitorDetailsScreen() {
               Share this QR code with your guest. The guard will scan it at the
               gate.
             </p>
+
+            <div className="mt-5 grid grid-cols-3 gap-2 w-full">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={shareWhatsApp}
+                className="flex-col h-auto py-2.5"
+              >
+                <MessageCircle className="h-4 w-4" />{" "}
+                <span className="text-xs">WhatsApp</span>
+              </Button>
+            </div>
           </CardContent>
         </Card>
 
