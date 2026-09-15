@@ -10,10 +10,10 @@ export const signin = (email, password) => {
   });
 };
 
-export const signup = (user) => {
+export const signup = (fullName, phone, password) => {
   return api("/auth/signup", {
     method: "POST",
-    body: JSON.stringify(user),
+    body: JSON.stringify({ fullName, phone, password }),
   });
 };
 

@@ -13,6 +13,8 @@ export function RouteGuard({ role, children }) {
   const navigate = useNavigate();
   const { ready, currentUser } = useAuth();
 
+  console.log(currentUser);
+
   useEffect(() => {
     if (!ready) return;
     if (!currentUser) {
