@@ -45,24 +45,24 @@ function LoginPage() {
 
     try {
       if (mode === "signin") {
-        const result = await signin(email, password);
+        const result = await signin(phone, password);
+        console.log(result);
 
-        if (result.success) {
-          toast(
-            `Welcome back, ${result.user.fullName.split(" ")[0]}`,
-            "success",
-          );
-
-          navigate(ROLE_HOME[result.user.role], {
-            replace: true,
-          });
+        if (!result.success) {
+          setError(result.error);
+          return;
         }
+        toast(`Welcome back, ${result.user.fullName.split(" ")[0]}`, "success");
+
+        navigate(ROLE_HOME[result.user.role], {
+          replace: true,
+        });
       } else {
         const result = await signUp(fullName, phone, password);
         console.log(result);
 
         if (!result.success) {
-          setError(result.message);
+          setError(result.error);
           return;
         }
 
@@ -73,6 +73,8 @@ function LoginPage() {
         });
       }
     } catch (err) {
+      console.log(err);
+
       setError(err.message);
     } finally {
       setLoading(false);

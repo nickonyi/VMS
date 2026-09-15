@@ -81,7 +81,7 @@ function AppShell({ children }) {
 
   if (!currentUser) return null;
 
-  const items = navByRole[currentUser.resident_type] ?? [];
+  const items = navByRole[currentUser.role] ?? [];
 
   const handleNav = (path) => {
     navigate(path);

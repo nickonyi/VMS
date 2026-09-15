@@ -5,8 +5,6 @@ import { FullPageSpinner } from "../components/ui/Spinner";
 function ProtectedRoute() {
   const { currentUser, ready } = useAuth();
 
-  console.log(currentUser);
-
   if (!ready) {
     return <FullPageSpinner label="Loading..." />;
   }

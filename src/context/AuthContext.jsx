@@ -47,9 +47,9 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
-  const signin = useCallback(async (email, password) => {
+  const signin = useCallback(async (phone, password) => {
     try {
-      const data = await authApi.signin(email, password);
+      const data = await authApi.signin(phone, password);
 
       if (data.user.status !== "active") {
         return {
