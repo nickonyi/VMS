@@ -17,6 +17,7 @@ import { useAuth } from "../context/AuthContext";
 import { ROLE_HOME } from "../lib/utils";
 import { DEMO } from "../lib/utils";
 import { useNavigate } from "react-router";
+import CreatingAccount from "./auth/CreatingAccount";
 
 function LoginPage() {
   const { toast } = useToast();
@@ -29,10 +30,11 @@ function LoginPage() {
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
+  const [creatingAccount, setCreatingAccount] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (ready && currentUser) {
+    if (ready && currentUser && currentUser.role !== "resident") {
       navigate(ROLE_HOME[currentUser.role], { replace: true });
     }
   }, [ready, currentUser, navigate]);
@@ -46,20 +48,24 @@ function LoginPage() {
     try {
       if (mode === "signin") {
         const result = await signin(phone, password);
-        console.log(result);
 
         if (!result.success) {
           setError(result.error);
+
           return;
         }
-        toast(`Welcome back, ${result.user.fullName.split(" ")[0]}`, "success");
 
-        navigate(ROLE_HOME[result.user.role], {
+        navigate("/resident/properties", {
           replace: true,
         });
+        //toast(`Welcome back, ${result.user.fullName.split(" ")[0]}`, "success");
+        //
+        //navigate(ROLE_HOME[result.user.role], {
+        //  replace: true,
+        //});
       } else {
+        setCreatingAccount(true);
         const result = await signUp(fullName, phone, password);
-        console.log(result);
 
         if (!result.success) {
           setError(result.error);
@@ -68,9 +74,13 @@ function LoginPage() {
 
         toast(`Welcome, ${result.user.fullName.split(" ")[0]}`, "success");
 
-        navigate(ROLE_HOME[result.user.role], {
+        navigate("/resident/properties", {
           replace: true,
         });
+
+        //navigate(ROLE_HOME[result.user.role], {
+        //  replace: true,
+        //});
       }
     } catch (err) {
       console.log(err);
@@ -87,6 +97,10 @@ function LoginPage() {
     setPassword(password);
     setError(null);
   };
+
+  if (creatingAccount) {
+    return <CreatingAccount />;
+  }
 
   return (
     <div className="min-h-screen flex flex-col lg:flex-row bg-slate-50">

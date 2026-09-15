@@ -16,6 +16,9 @@ import AdminUsersScreen from "../screens/admin/users/AdminUsersScreen";
 import AdminAnalyticsScreen from "../screens/admin/analytics/AdminAnalyticsScreen";
 import VisitorDetailsScreen from "../screens/residents/pass/VisitorDetailsScreen";
 import GuardVerifyScreen from "../screens/guard/verify/GuardVerifyScreen";
+import PropertySelectionPage from "../screens/residents/PropertySelectionPage";
+import PropertyDetailsPage from "../screens/residents/PropertyDetailsPage";
+import AccessPendingPage from "../screens/residents/property/AccessPendingPage";
 
 const routes = [
   {
@@ -29,6 +32,18 @@ const routes = [
       {
         element: <ProtectedRoute />,
         children: [
+          {
+            path: "/resident/properties",
+            element: <PropertySelectionPage />,
+          },
+          {
+            path: "/resident/properties/:id",
+            element: <PropertyDetailsPage />,
+          },
+          {
+            path: "/resident/access-pending",
+            element: <AccessPendingPage />,
+          },
           {
             path: "/resident",
             element: <ResidentLayout />,
