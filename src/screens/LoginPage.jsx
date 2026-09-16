@@ -54,15 +54,17 @@ function LoginPage() {
 
           return;
         }
+        if (result.user.role === "resident") {
+          navigate("/resident", {
+            replace: true,
+          });
 
-        navigate("/resident/properties", {
+          return;
+        }
+
+        navigate(ROLE_HOME[result.user.role], {
           replace: true,
         });
-        //toast(`Welcome back, ${result.user.fullName.split(" ")[0]}`, "success");
-        //
-        //navigate(ROLE_HOME[result.user.role], {
-        //  replace: true,
-        //});
       } else {
         setCreatingAccount(true);
         const result = await signUp(fullName, phone, password);
@@ -71,8 +73,6 @@ function LoginPage() {
           setError(result.error);
           return;
         }
-
-        toast(`Welcome, ${result.user.fullName.split(" ")[0]}`, "success");
 
         navigate("/resident/properties", {
           replace: true,

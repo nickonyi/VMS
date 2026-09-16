@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { ArrowLeft, Search, MapPin, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useProperties } from "../../hooks/useProperties";
+import SignOutButton from "../../components/SignOutButton";
 
 const DEMO_PROPERTIES = [
   {
@@ -79,7 +80,7 @@ function PropertySelectionPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-50 flex flex-col justify-center">
       <div className="mx-auto w-full max-w-2xl px-5 py-6 sm:px-8">
         {/* Header */}
         <header className="flex items-center gap-3">
@@ -164,6 +165,8 @@ function PropertySelectionPage() {
           )}
         </div>
       </div>
+
+      <SignOutButton />
     </div>
   );
 }

@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { checkPropertyAccess } from "../api/propertyApi";
 
 export const useAccessStatus = () => {
   const [checking, setChecking] = useState(false);
   const [error, setError] = useState(null);
 
-  const checkAccess = async () => {
+  const checkAccess = useCallback(async () => {
     setChecking(true);
     setError(null);
 
@@ -28,7 +28,7 @@ export const useAccessStatus = () => {
     } finally {
       setChecking(false);
     }
-  };
+  }, []);
 
   return {
     checkAccess,
