@@ -16,6 +16,10 @@ import AdminUsersScreen from "../screens/admin/users/AdminUsersScreen";
 import AdminAnalyticsScreen from "../screens/admin/analytics/AdminAnalyticsScreen";
 import VisitorDetailsScreen from "../screens/residents/pass/VisitorDetailsScreen";
 import GuardVerifyScreen from "../screens/guard/verify/GuardVerifyScreen";
+import PropertySelectionPage from "../screens/residents/PropertySelectionPage";
+import PropertyDetailsPage from "../screens/residents/PropertyDetailsPage";
+import AccessPendingPage from "../screens/residents/property/AccessPendingPage";
+import AssignedResidentRoute from "../layout/AssignedResidentRoute";
 
 const routes = [
   {
@@ -29,28 +33,50 @@ const routes = [
       {
         element: <ProtectedRoute />,
         children: [
+          // Resident onboarding
           {
-            path: "/resident",
-            element: <ResidentLayout />,
+            path: "/resident/properties",
+            element: <PropertySelectionPage />,
+          },
+          {
+            path: "/resident/properties/:id",
+            element: <PropertyDetailsPage />,
+          },
+          {
+            path: "/resident/access-pending",
+            element: <AccessPendingPage />,
+          },
+
+          // Resident application
+          {
+            element: <AssignedResidentRoute />,
             children: [
               {
-                index: true,
-                element: <ResidentDashboard />,
-              },
-              {
-                path: "new",
-                element: <CreateVisitorPage />,
-              },
-              {
-                path: "pass/:passId",
-                element: <VisitorDetailsScreen />,
-              },
-              {
-                path: "history",
-                element: <HistoryPage />,
+                path: "/resident",
+                element: <ResidentLayout />,
+                children: [
+                  {
+                    index: true,
+                    element: <ResidentDashboard />,
+                  },
+                  {
+                    path: "new",
+                    element: <CreateVisitorPage />,
+                  },
+                  {
+                    path: "pass/:passId",
+                    element: <VisitorDetailsScreen />,
+                  },
+                  {
+                    path: "history",
+                    element: <HistoryPage />,
+                  },
+                ],
               },
             ],
           },
+
+          // Guard
           {
             path: "/guard",
             element: <GuardLayout />,
@@ -69,6 +95,8 @@ const routes = [
               },
             ],
           },
+
+          // Admin
           {
             path: "/admin",
             element: <AdminLayout />,

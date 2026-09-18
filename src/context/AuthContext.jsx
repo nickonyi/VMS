@@ -31,9 +31,25 @@ export function AuthProvider({ children }) {
     setReady(true);
   }, []);
 
-  const signin = useCallback(async (email, password) => {
+  const signUp = useCallback(async (fullName, phone, password) => {
     try {
-      const data = await authApi.signin(email, password);
+      const data = await authApi.signup(fullName, phone, password);
+
+      setCurrentUser(data?.user);
+
+      localStorage.setItem(SESSION_KEY, JSON.stringify(data.user));
+      return data;
+    } catch (err) {
+      return {
+        success: false,
+        message: err.message,
+      };
+    }
+  }, []);
+
+  const signin = useCallback(async (phone, password) => {
+    try {
+      const data = await authApi.signin(phone, password);
 
       if (data.user.status !== "active") {
         return {
@@ -66,8 +82,8 @@ export function AuthProvider({ children }) {
   }, []);
 
   const value = useMemo(
-    () => ({ ready, currentUser, signin, signout }),
-    [ready, currentUser, signin, signout],
+    () => ({ ready, currentUser, signUp, signin, signout }),
+    [ready, currentUser, signUp, signin, signout],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

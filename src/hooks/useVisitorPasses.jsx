@@ -11,6 +11,7 @@ export function useResidentPasses() {
       setLoading(true);
 
       const response = await residentApi.getMyVisitorPasses();
+      console.log(response);
 
       setPasses(response.data);
     } catch (err) {

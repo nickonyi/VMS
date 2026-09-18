@@ -17,24 +17,24 @@ import { useAuth } from "../context/AuthContext";
 import { ROLE_HOME } from "../lib/utils";
 import { DEMO } from "../lib/utils";
 import { useNavigate } from "react-router";
+import CreatingAccount from "./auth/CreatingAccount";
 
 function LoginPage() {
   const { toast } = useToast();
   const [mode, setMode] = useState("signin");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const { ready, currentUser, signin } = useAuth();
+  const { ready, currentUser, signUp, signin } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
-  const [role, setRole] = useState("resident");
-  const [unit, setUnit] = useState("");
   const [phone, setPhone] = useState("");
+  const [creatingAccount, setCreatingAccount] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (ready && currentUser) {
+    if (ready && currentUser && currentUser.role !== "resident") {
       navigate(ROLE_HOME[currentUser.role], { replace: true });
     }
   }, [ready, currentUser, navigate]);
@@ -45,19 +45,50 @@ function LoginPage() {
     setError(null);
     setLoading(true);
 
-    const result = await signin(email, password);
+    try {
+      if (mode === "signin") {
+        const result = await signin(phone, password);
 
-    if (result.success) {
-      toast(`Welcome back, ${result.user.fullName.split(" ")[0]}`, "success");
+        if (!result.success) {
+          setError(result.error);
 
-      navigate(ROLE_HOME[result.user.role], {
-        replace: true,
-      });
-    } else {
-      setError(result.error);
+          return;
+        }
+        if (result.user.role === "resident") {
+          navigate("/resident", {
+            replace: true,
+          });
+
+          return;
+        }
+
+        navigate(ROLE_HOME[result.user.role], {
+          replace: true,
+        });
+      } else {
+        setCreatingAccount(true);
+        const result = await signUp(fullName, phone, password);
+
+        if (!result.success) {
+          setError(result.error);
+          return;
+        }
+
+        navigate("/resident/properties", {
+          replace: true,
+        });
+
+        //navigate(ROLE_HOME[result.user.role], {
+        //  replace: true,
+        //});
+      }
+    } catch (err) {
+      console.log(err);
+
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   const fillDemo = ({ email, password }) => {
@@ -66,6 +97,10 @@ function LoginPage() {
     setPassword(password);
     setError(null);
   };
+
+  if (creatingAccount) {
+    return <CreatingAccount />;
+  }
 
   return (
     <div className="min-h-screen flex flex-col lg:flex-row bg-slate-50">
@@ -144,62 +179,17 @@ function LoginPage() {
                   required
                   autoComplete="name"
                 />
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1.5">
-                    Account type
-                  </label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {roleOptions.map((r) => (
-                      <button
-                        key={r.value}
-                        type="button"
-                        onClick={() => setRole(r.value)}
-                        className={`rounded-xl border p-3 text-left transition-all ${
-                          role === r.value
-                            ? "border-slate-900 bg-slate-50 ring-1 ring-slate-900"
-                            : "border-slate-200 hover:border-slate-300"
-                        }`}
-                      >
-                        <span className="block text-sm font-semibold text-slate-900">
-                          {r.label}
-                        </span>
-                        <span className="block text-[11px] text-slate-500 mt-0.5 leading-tight">
-                          {r.description}
-                        </span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                {role === "resident" && (
-                  <Input
-                    label="Apartment / Unit"
-                    name="unit"
-                    placeholder="e.g. A-204"
-                    value={unit}
-                    onChange={(e) => setUnit(e.target.value)}
-                  />
-                )}
-                <Input
-                  label="Phone (optional)"
-                  name="phone"
-                  type="tel"
-                  placeholder="+1 555 000 1234"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                />
               </>
             )}
-
             <Input
-              label="Email address"
-              name="email"
-              type="email"
-              placeholder="you@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              autoComplete="email"
+              label="Phone Number"
+              name="phone"
+              type="tel"
+              placeholder="07 55 50 00 12"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
             />
+
             <Input
               label="Password"
               name="password"
@@ -229,7 +219,35 @@ function LoginPage() {
               {!loading && <ArrowRight className="h-4 w-4" />}
             </Button>
           </form>
-
+          <div className="mt-6 text-center text-sm text-slate-500">
+            {mode === "signin" ? (
+              <>
+                Don't have an account?{" "}
+                <button
+                  onClick={() => {
+                    setMode("signup");
+                    setError(null);
+                  }}
+                  className="font-semibold text-slate-900 hover:underline"
+                >
+                  Sign up
+                </button>
+              </>
+            ) : (
+              <>
+                Already have an account?{" "}
+                <button
+                  onClick={() => {
+                    setMode("signin");
+                    setError(null);
+                  }}
+                  className="font-semibold text-slate-900 hover:underline"
+                >
+                  Sign in
+                </button>
+              </>
+            )}
+          </div>
           {mode === "signup" && (
             <button
               onClick={() => {

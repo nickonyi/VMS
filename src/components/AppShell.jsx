@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import { useState } from "react";
-import { NavLink, useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { cn } from "../lib/utils";
 import { Avatar } from "./ui/Avatar";
 
